@@ -3,7 +3,7 @@ const MaxStrength = 120
 
 function newIssue(startedAt) {
   const id = uuidv1()
-  const duration = 60 + Math.floor(Math.random() * 120)
+  const duration = 40 + Math.floor(Math.random() * 40)
   const expiredAt = startedAt + duration
   const required = Math.random() > 0.8
   const taskCount = 1 + Math.floor(Math.random() * 3)
