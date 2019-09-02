@@ -1,24 +1,9 @@
 const uuidv1 = require('uuid/v1')
 
-const names = [
-  'Ben',
-  'James',
-  'Oliver',
-  'Bruce',
-  'Joe',
-  'Leo',
-  'Andy',
-  'Sylvia',
-  'Joyce',
-  'Mary'
-]
+const DeveloperGroups = require('./developerGroups')
 
-function newDeveloper() {
+function newDeveloper({ name, backend, frontend, design }) {
   const id = uuidv1()
-  const name = names[Math.floor(Math.random() * names.length)]
-  const backend = 10 + 10 * Math.floor(Math.random() * 12)
-  const frontend = 10 + 10 * Math.floor(Math.random() * 12)
-  const design = 10 + 10 * Math.floor(Math.random() * 12)
   const cooldown = 0
   return {
     id,
@@ -30,14 +15,14 @@ function newDeveloper() {
   }
 }
 
-function newDevelopers(count) {
-  const devs = []
-  let i = 0
-  while (i < count) {
-    devs.push(newDeveloper())
-    i = i + 1
-  }
-  return devs
+function newDevelopers() {
+  const group =
+    DeveloperGroups[Math.floor(Math.random() * DeveloperGroups.length)]
+  return Object.keys(group).map(name => {
+    const devAttrs = group[name]
+    const { frontend, backend, design } = devAttrs
+    return newDeveloper({ name, frontend, backend, design })
+  })
 }
 
 module.exports.newDevelopers = newDevelopers
