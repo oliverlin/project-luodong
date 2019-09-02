@@ -2,10 +2,6 @@ const uuidv1 = require('uuid/v1')
 const MaxStrength = 120
 
 function newIssue(startedAt) {
-  if (startedAt > 0 && Math.random() > 0.2) {
-    return null
-  }
-
   const id = uuidv1()
   const duration = 60 + Math.floor(Math.random() * 120)
   const expiredAt = startedAt + duration

@@ -69,15 +69,22 @@ function newGame(debugState = {}) {
     taskMap,
     ongoingMap
   }
+  let issueSeed = 1
+  let minimumNewIssueCycle = 6
 
   const syncIssue = function() {
-    const issue = Issue.newIssue(currentTime)
-    if (issue !== null) {
-      issue.no = Object.keys(issueMap).length
-      issueMap[issue.id] = issue
-      issue.tasks.forEach(task => {
-        taskMap[task.id] = task
-      })
+    if (issueSeed > Math.random()) {
+      const issue = Issue.newIssue(currentTime)
+      if (issue !== null) {
+        issue.no = Object.keys(issueMap).length
+        issueMap[issue.id] = issue
+        issue.tasks.forEach(task => {
+          taskMap[task.id] = task
+        })
+      }
+      issueSeed = minimumNewIssueCycle * -0.1
+    } else {
+      issueSeed += 0.1
     }
   }
 
