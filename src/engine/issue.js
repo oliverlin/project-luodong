@@ -29,6 +29,7 @@ function newIssue(startedAt) {
     id,
     tasks,
     required,
+    startedAt,
     expiredAt
   }
 }
