@@ -3,12 +3,11 @@ import ProductionLine from './containers/ProductionLine'
 import ResourcePanel from './containers/ResourcePanel'
 import styled from 'styled-components'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { DROPPABLE_RESOURCE_PANEL } from './constants'
+import { TICK_PER_MS, DROPPABLE_RESOURCE_PANEL } from './constants'
 import Game from './engine/game'
 
 // const state = Game.state()
-
-
+// 20/0.8
 // game.assignDeveloper(devId, taskId)
 // game.nextTick()
 // game.removeDeveloper(devId)
@@ -24,6 +23,7 @@ const reorder = (list, startIndex, endIndex) => {
 
 class App extends Component {
   state = {
+    currentTime: null,
     resources: [],
     issues: [],
     intervalId: null,
@@ -42,23 +42,30 @@ class App extends Component {
   }
 
   _startTicker = () => {
-    const intervalId = window.setInterval(this._tick, 1000)
+    const intervalId = window.setInterval(this._tick, TICK_PER_MS)
     this.setState({ intervalId })
+  }
+
+  _stopTicker = () => {
+    window.clearInterval(this.state.intervalId)
   }
 
   _tick = () => {
     this.state.game.nextTick()
     this._refreshData()
+  }
 
+  _removeDeveloper = (devId) => {
+    this.state.game.removeDeveloper(devId)
+    this._refreshData()
   }
 
   _refreshData = () => {
     const { isDragging, game } = this.state
     const gameState = game.state()
-    console.log(gameState.issues)
-    console.log('isDragging: ', isDragging)
     if (!isDragging) {
       this.setState({
+        currentTime: gameState.currentTime,
         issues: gameState.issues,
         resources: gameState.developers
       })
@@ -68,8 +75,7 @@ class App extends Component {
   _mapResourcesToIssues = () => {
     const { resources, issues } = this.state
     return issues.map(issue=>{
-
-      const xx= {
+      return {
         ...issue,
         tasks: issue.tasks.map(task => {
           const resourceId = task.devId
@@ -79,20 +85,21 @@ class App extends Component {
             : task
         })
       }
-      return xx
     })
   }
 
   render() {
-    const { resources, issues } = this.state
+    const { resources, currentTime } = this.state
     const issuesWithResources = this._mapResourcesToIssues()
     return (
       <DragDropContext
-        onBeforeDragStart={this._toggleDragging(true)}
+        onBeforeDragStart={this._onBeforeDragStart}
         onDragEnd={this._onDragEnd}>
         <StyledLayout>
           <div className='production-line'>
             <ProductionLine
+              currentTime={currentTime}
+              onRemove={this._removeDeveloper}
               issues={issuesWithResources} />
           </div>
           <div className='resource-panel'>
@@ -104,12 +111,19 @@ class App extends Component {
     )
   }
 
+  _onBeforeDragStart = () => {
+    this._toggleDragging(true)
+    this._stopTicker()
+  }
+
+
   _toggleDragging = isDragging => () => {
     this.setState({ isDragging })
   }
 
   _onDragEnd = (result) => {
     this._toggleDragging(false)()
+    this._startTicker()
     // dropped outside the list
     if (!result.destination) {
       return
@@ -153,6 +167,7 @@ const StyledLayout = styled.div`
   }
   .resource-panel{
     flex: 0 0 200px;
-    background: red;
+    padding: 10px;
+    background: #fff;
   }
 `
