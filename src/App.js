@@ -35,7 +35,7 @@ class App extends Component {
   componentDidMount(){
     const game = this._setUpGame()
     this.setState({ game }, this._startTicker)
-    this.audio = new Audio("https://dl.dropbox.com/s/cglsppf3s5u3t03/bensound-clearday.mp3")
+    this.audio = new Audio("https://dl.dropbox.com/s/32fcidb4vs5wz1k/background_cat.mp3")
     this.audio.play()
   }
 
