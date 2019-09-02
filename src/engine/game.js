@@ -16,10 +16,19 @@ function updateTask({ devId, taskId, gameState }) {
     return
   }
 
-  task.progress += dev[task.taskType]
-  if (task.progress >= task.complexity) {
+  // Each task need at lesat **minimumTick** tick to complete
+  const minimumTick = 10
+
+  task.resolved += dev[task.taskType]
+  task.consumedTick += 1
+  if (task.consumedTick >= minimumTick && task.resolved >= task.complexity) {
     task.gameState = 'completed'
+    task.progress = 1
     delete gameState.ongoingMap[devId]
+  } else {
+    const progress1 = task.consumedTick / minimumTick
+    const progress2 = task.resolved / task.complexity
+    task.progress = progress1 < progress2 ? progress1 : progress2
   }
 }
 
@@ -42,16 +51,19 @@ function updateDevs(gameState) {
   })
 }
 
-function newGame(debug = false) {
+function newGame(debugState = {}) {
   let currentTime = 0
-  const developerMap = {}
-  const devs = Developer.newDevelopers(3)
-  devs.forEach(dev => {
-    developerMap[dev.id] = dev
-  })
-  const issueMap = {}
-  const taskMap = {}
-  const ongoingMap = {}
+
+  const developerMap = debugState.developerMap || {}
+  if (Object.keys(developerMap).length == 0) {
+    const devs = Developer.newDevelopers(3)
+    devs.forEach(dev => {
+      developerMap[dev.id] = dev
+    })
+  }
+  const issueMap = debugState.issueMap || {}
+  const taskMap = debugState.taskMap || {}
+  const ongoingMap = debugState.ongoingMap || {}
   const state = {
     developerMap,
     issueMap,
@@ -59,7 +71,7 @@ function newGame(debug = false) {
     ongoingMap
   }
 
-  const SyncIssue = function() {
+  const syncIssue = function() {
     const issue = Issue.newIssue(currentTime)
     if (issue !== null) {
       issueMap[issue.id] = issue
@@ -70,7 +82,7 @@ function newGame(debug = false) {
   }
 
   const updateState = function() {
-    SyncIssue()
+    syncIssue()
     updateTasks(state)
     updateDevs(state)
   }
@@ -130,7 +142,7 @@ function newGame(debug = false) {
     dev.cooldown = 10
   }
 
-  SyncIssue()
+  syncIssue()
   return {
     removeDeveloper,
     assignDeveloper,
