@@ -1,4 +1,5 @@
 const uuidv1 = require('uuid/v1')
+const MaxStrength = 120
 
 function newIssue(startedAt) {
   if (startedAt > 0 && Math.random() > 0.2) {
@@ -6,7 +7,7 @@ function newIssue(startedAt) {
   }
 
   const id = uuidv1()
-  const duration = 3 + Math.floor(Math.random() * 8)
+  const duration = 60 + Math.floor(Math.random() * 120)
   const expiredAt = startedAt + duration
   const required = Math.random() > 0.8
   const taskCount = 1 + Math.floor(Math.random() * 3)
@@ -18,9 +19,9 @@ function newIssue(startedAt) {
       Math.floor(Math.random() * 3)
     ]
 
-    const complexityFactor = duration >= 7 ? 7 : duration
+    const complexityFactor = 24.5
     const complexity =
-      10 + 10 * Math.floor(Math.random() * 12 * complexityFactor)
+      10 + Math.floor(Math.random() * MaxStrength * complexityFactor)
     tasks.push(newTask({ taskType, expiredAt, complexity, issueId: id }))
     i += 1
   }
@@ -30,21 +31,26 @@ function newIssue(startedAt) {
     tasks,
     required,
     startedAt,
-    expiredAt
+    expiredAt,
+    score
   }
 }
 
 function newTask({ taskType, expiredAt, complexity, issueId }) {
   const id = uuidv1()
   const progress = 0
+  const resolved = 0
   const state = 'created'
+  const consumedTick = 0
   return {
     id,
     issueId,
     progress,
     complexity,
+    resolved,
     expiredAt,
     taskType,
+    consumedTick,
     state
   }
 }

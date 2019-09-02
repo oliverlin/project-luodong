@@ -13,7 +13,7 @@ const names = [
   'Mary'
 ]
 
-function newDeveloper(count) {
+function newDeveloper() {
   const id = uuidv1()
   const name = names[Math.floor(Math.random() * names.length)]
   const backend = 10 + 10 * Math.floor(Math.random() * 12)
