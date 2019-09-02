@@ -22,7 +22,7 @@ function updateTask({ devId, taskId, gameState }) {
   task.resolved += dev[task.taskType]
   task.consumedTick += 1
   if (task.consumedTick >= minimumTick && task.resolved >= task.complexity) {
-    task.gameState = 'completed'
+    task.state = 'completed'
     task.progress = 1
     delete gameState.ongoingMap[devId]
   } else {
@@ -51,6 +51,35 @@ function updateDevs(gameState) {
   })
 }
 
+function updateIssues(gameState) {
+  Object.values(gameState.issueMap).forEach(issue => {
+    if (issue.state !== 'completed') {
+      const tasks = issue.tasks
+      uncompletedTasks = tasks.filter(t => t.state !== 'completed')
+      if (uncompletedTasks.length == 0) {
+        issue.state = 'completed'
+      } else {
+        const delay = gameState.currentTime - issue.expiredAt
+        if (delay === 5) {
+          issue.penalty = Math.floor(issue.score * 0.5)
+        } else if (delay === 10) {
+          issue.penalty = issue.score
+        }
+      }
+    }
+  })
+}
+
+function computeScore(issues) {
+  return issues.reduce((memo, issue) => {
+    let score = issue.penalty
+    if (issue.state === 'completed') {
+      score += issue.score
+    }
+    return memo + score
+  }, 0)
+}
+
 function newGame(debugState = {}) {
   let currentTime = 0
   const developerMap = debugState.developerMap || {}
@@ -64,6 +93,7 @@ function newGame(debugState = {}) {
   const taskMap = debugState.taskMap || {}
   const ongoingMap = debugState.ongoingMap || {}
   const state = {
+    currentTime,
     developerMap,
     issueMap,
     taskMap,
@@ -92,6 +122,7 @@ function newGame(debugState = {}) {
     syncIssue()
     updateTasks(state)
     updateDevs(state)
+    updateIssues(state)
   }
 
   const assignDeveloper = function(devId, taskId) {
@@ -180,6 +211,10 @@ function newGame(debugState = {}) {
         developers,
         issues
       }
+    },
+    score: function() {
+      const issues = Object.values(issueMap)
+      return computeScore(issues)
     },
     debug: function() {
       return {

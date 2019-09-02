@@ -8,6 +8,8 @@ function newIssue(startedAt) {
   const required = Math.random() > 0.8
   const taskCount = 1 + Math.floor(Math.random() * 3)
   const score = 100 + Math.floor(Math.random() * duration * 50)
+  const penalty = 0
+  const state = 'created'
   let i = 0
   const tasks = []
   while (i < taskCount) {
@@ -28,7 +30,9 @@ function newIssue(startedAt) {
     required,
     startedAt,
     expiredAt,
-    score
+    score,
+    penalty,
+    state
   }
 }
 
