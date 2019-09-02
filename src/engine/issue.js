@@ -17,10 +17,13 @@ function newIssue(startedAt) {
       Math.floor(Math.random() * 3)
     ]
 
-    const complexityFactor = 10
-    const complexity =
-      10 + Math.floor(Math.random() * MaxStrength * complexityFactor)
-    tasks.push(newTask({ taskType, expiredAt, complexity, issueId: id }))
+    const maximumTick = 10
+    const complexityFactor = MaxStrength * maximumTick
+    const complexity = 10 + Math.floor(Math.random() * complexityFactor)
+    const difficulty = 1 + Math.round((complexity * 4) / complexityFactor)
+    tasks.push(
+      newTask({ taskType, expiredAt, complexity, difficulty, issueId: id })
+    )
     i += 1
   }
 
@@ -36,7 +39,7 @@ function newIssue(startedAt) {
   }
 }
 
-function newTask({ taskType, expiredAt, complexity, issueId }) {
+function newTask({ taskType, expiredAt, complexity, difficulty, issueId }) {
   const id = uuidv1()
   const progress = 0
   const resolved = 0
@@ -47,6 +50,7 @@ function newTask({ taskType, expiredAt, complexity, issueId }) {
     issueId,
     progress,
     complexity,
+    difficulty,
     resolved,
     expiredAt,
     taskType,
