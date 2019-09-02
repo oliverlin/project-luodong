@@ -74,6 +74,7 @@ function newGame(debugState = {}) {
   const syncIssue = function() {
     const issue = Issue.newIssue(currentTime)
     if (issue !== null) {
+      issue.no = Object.keys(issueMap).length
       issueMap[issue.id] = issue
       issue.tasks.forEach(task => {
         taskMap[task.id] = task
