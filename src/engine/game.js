@@ -24,7 +24,7 @@ function updateTask({ devId, taskId, gameState }) {
   if (task.consumedTick >= minimumTick && task.resolved >= task.complexity) {
     task.state = 'completed'
     task.progress = 1
-    delete gameState.ongoingMap[devId]
+    gameState.releaseDeveloper(devId)
   } else {
     const progress1 = task.consumedTick / minimumTick
     const progress2 = task.resolved / task.complexity
@@ -52,6 +52,7 @@ function updateDevs(gameState) {
 }
 
 function updateIssues(gameState) {
+  const currentTime = gameState.currentTime
   Object.values(gameState.issueMap).forEach(issue => {
     if (issue.state !== 'completed') {
       const tasks = issue.tasks
@@ -59,7 +60,7 @@ function updateIssues(gameState) {
       if (uncompletedTasks.length == 0) {
         issue.state = 'completed'
       } else {
-        const delay = gameState.currentTime - issue.expiredAt
+        const delay = currentTime - issue.expiredAt
         if (issue.required) {
           if (delay === 5) {
             issue.penalty = Math.floor(issue.score * 0.5)
@@ -69,6 +70,30 @@ function updateIssues(gameState) {
         }
       }
     }
+  })
+
+  delayedIssues = Object.values(gameState.issueMap)
+    .filter(i => currentTime - i.expiredAt > 0)
+    .sort((a, b) => {
+      return b.no - a.no
+    })
+  const maximumDelayedIssueCount = 3
+
+  const ongoingTaskMap = Object.keys(gameState.ongoingMap).reduce(
+    (memo, devId) => {
+      const taskId = gameState.ongoingMap[devId]
+      memo[taskId] = devId
+      return memo
+    },
+    {}
+  )
+
+  delayedIssues.slice(maximumDelayedIssueCount).forEach(issue => {
+    issue.tasks.forEach(task => {
+      if (ongoingTaskMap[task.id]) {
+        gameState.releaseDeveloper(devId)
+      }
+    })
   })
 }
 
@@ -94,16 +119,20 @@ function newGame(debugState = {}) {
   const issueMap = debugState.issueMap || {}
   const taskMap = debugState.taskMap || {}
   const ongoingMap = debugState.ongoingMap || {}
+  const releaseDeveloper = function(devId) {
+    delete ongoingMap[devId]
+  }
   const state = {
     currentTime,
     developerMap,
     issueMap,
     taskMap,
-    ongoingMap
+    ongoingMap,
+    releaseDeveloper
   }
+
   let issueSeed = 1
   let minimumNewIssueCycle = 6
-
   const syncIssue = function() {
     if (issueSeed > Math.random()) {
       const issue = Issue.newIssue(currentTime)
@@ -178,7 +207,7 @@ function newGame(debugState = {}) {
       return
     }
 
-    delete state.ongoingMap[devId]
+    releaseDeveloper(devId)
     dev.cooldown = 10
   }
 
