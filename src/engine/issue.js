@@ -31,7 +31,8 @@ function newIssue(startedAt) {
     tasks,
     required,
     startedAt,
-    expiredAt
+    expiredAt,
+    score
   }
 }
 

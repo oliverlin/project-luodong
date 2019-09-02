@@ -53,7 +53,6 @@ function updateDevs(gameState) {
 
 function newGame(debugState = {}) {
   let currentTime = 0
-
   const developerMap = debugState.developerMap || {}
   if (Object.keys(developerMap).length == 0) {
     const devs = Developer.newDevelopers(3)
