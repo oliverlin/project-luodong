@@ -28,7 +28,8 @@ class App extends Component {
     issues: [],
     intervalId: null,
     game: null,
-    isDragging: false
+    isDragging: false,
+    score: 0
   }
 
   componentDidMount(){
@@ -67,7 +68,8 @@ class App extends Component {
       this.setState({
         currentTime: gameState.currentTime,
         issues: gameState.issues,
-        resources: gameState.developers
+        resources: gameState.developers,
+        score: gameState.score,
       })
     }
   }
@@ -89,7 +91,7 @@ class App extends Component {
   }
 
   render() {
-    const { resources, currentTime } = this.state
+    const { resources, currentTime, score } = this.state
     const issuesWithResources = this._mapResourcesToIssues()
     return (
       <DragDropContext
@@ -104,6 +106,7 @@ class App extends Component {
           </div>
           <div className='resource-panel'>
             <ResourcePanel
+              score={score}
               resources={resources} />
           </div>
         </StyledLayout>
