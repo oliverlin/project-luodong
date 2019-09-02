@@ -25,9 +25,9 @@ const ResourceItem = ({
           ref={draggableProvided.innerRef}
           {...draggableProvided.draggableProps}
           {...draggableProvided.dragHandleProps}>
-          <SkillBar type='backend' value={backend / 120} />
-          <SkillBar type='design' value={design / 120} />
-          <SkillBar type='frontend' value={frontend / 120} />
+          <SkillBar compact type='backend' value={backend / 120} />
+          <SkillBar compact type='design' value={design / 120} />
+          <SkillBar compact type='frontend' value={frontend / 120} />
           {
             cooldown > 0 && (
               <div className='cd'>CD: {cooldown}</div>
@@ -37,7 +37,7 @@ const ResourceItem = ({
             <div className='name'>{resourceName}</div>
             {
               used && (
-                <div className='busy'>is busy</div>
+                <div className='busy'>BUSY</div>
               )
             }
           </div>
@@ -50,15 +50,18 @@ const ResourceItem = ({
 export default ResourceItem
 
 const StyledResource = styled.div`
-  /* width: 80px; */
-  /* height: 40px; */
+  width: 80px;
+  height: 28px;
   background: #fff;
   border-radius: 4px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 6px;
   opacity: ${props => (props.isDragging || props.isUsed) ? 0.6 : 1};
   position: relative;
   box-shadow: 0 1px 6px rgba(80,80,80,0.1);
+  &:hover{
+    box-shadow: ${props => (props.isDragging || props.isUsed) ? '0 1px 6px rgba(80,80,80,0.1)' : '0 2px 9px rgba(80,80,80,0.3)'};
+  }
   .cd{
     position: absolute;
     top: 0;
@@ -73,6 +76,7 @@ const StyledResource = styled.div`
     align-items: center;
     .name{
       margin-right: 6px;
+      font-size: 13px;
     }
     .busy{
       color: #999;

@@ -123,6 +123,7 @@ class App extends Component {
 
   _onDragEnd = (result) => {
     this._toggleDragging(false)()
+    this._tick()
     this._startTicker()
     // dropped outside the list
     if (!result.destination) {
@@ -166,7 +167,7 @@ const StyledLayout = styled.div`
     background: blue;
   }
   .resource-panel{
-    flex: 0 0 200px;
+    flex: 0 0 100px;
     padding: 10px;
     background: #fff;
   }

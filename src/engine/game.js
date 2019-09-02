@@ -56,7 +56,7 @@ function updateIssues(gameState) {
   Object.values(gameState.issueMap).forEach(issue => {
     if (issue.state !== 'completed') {
       const tasks = issue.tasks
-      uncompletedTasks = tasks.filter(t => t.state !== 'completed')
+      const uncompletedTasks = tasks.filter(t => t.state !== 'completed')
       if (uncompletedTasks.length == 0) {
         issue.state = 'completed'
       } else {
@@ -72,7 +72,7 @@ function updateIssues(gameState) {
     }
   })
 
-  delayedIssues = Object.values(gameState.issueMap)
+  const delayedIssues = Object.values(gameState.issueMap)
     .filter(i => currentTime - i.expiredAt > 0)
     .sort((a, b) => {
       return b.no - a.no
@@ -91,6 +91,7 @@ function updateIssues(gameState) {
   delayedIssues.slice(maximumDelayedIssueCount).forEach(issue => {
     issue.tasks.forEach(task => {
       if (ongoingTaskMap[task.id]) {
+        const devId = ongoingTaskMap[task.id].devId
         gameState.releaseDeveloper(devId)
       }
     })

@@ -18,10 +18,12 @@ const getColor = type => {
 const SkillBar = ({
   type,
   value,
-  withBackground
+  withBackground,
+  compact
 }) => {
   return (
     <StyledBar
+      compact={compact}
       value={value}
       color={getColor(type)}>
       <div className='bar'/>
@@ -37,24 +39,27 @@ const SkillBar = ({
 const StyledBar = styled.div`
   margin-bottom: 2px;
   position: relative;
-  height: 4px;
+  height: ${props => props.compact ? '4px' : '8px'};
   .bar{
     position: absolute;
     top: 0;
     left: 0;
     width: ${props => 100 * props.value}%;
     background: ${props => props.color};
-    height: 4px;
+    height: ${props => props.compact ? '4px' : '8px'};;
     z-index: 2;
     transition: ${tickFrequencyInSec}s width;
   }
   .bg{
     width: 100%;
     background: ${props => props.color};
-    height: 4px;
+    height: ${props => props.compact ? '4px' : '8px'};;
     position: absolute;
     z-index: 1;
     opacity: 0.5;
+  }
+  &:last-child{
+    margin: 0;
   }
 `
 export default SkillBar

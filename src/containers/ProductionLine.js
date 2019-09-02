@@ -50,7 +50,7 @@ const ProductionLine = ({ issues, currentTime, onRemove }) => {
               .map(issue => {
                 return (
                   <Issue
-                    key={issue.id}
+                    key={issue.no}
                     id={issue.id}
                     tasks={issue.tasks}
                     onRemove={onRemove}

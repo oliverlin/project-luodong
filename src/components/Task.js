@@ -27,12 +27,14 @@ const Task = ({
     <StyledTask>
       {/* {id} */}
       {/* {devId} */}
-      <div>{complexity}</div>
-      <div>{taskType}</div>
-      <SkillBar
-        withBackground
-        type={taskType}
-        value={progress}/>
+      {/* <div>{complexity}</div> */}
+      {/* <div>{taskType}</div> */}
+      <div>
+        <SkillBar
+          withBackground
+          type={taskType}
+          value={progress}/>
+      </div>
       {/* <div>{state}</div> */}
       {
         dev ? (
@@ -73,7 +75,6 @@ const StyledDropZone = styled.div`
   /* width: 50px; */
   /* height: 30px; */
   background: ${props => props.isHovering ? '#999' : '#e1e1e1'};
-  border-radius: 4px;
   padding: 5px;
   /* padding: 10px; */
   .wi{
@@ -101,7 +102,14 @@ const StyledTask = styled.div`
   margin-right: 10px;
   overflow: hidden;
   width: 80px;
-  /* height: 190px; */
+  height: 40px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  &:last-child{
+    margin: 0;
+  }
 `
 const StyledWorker = styled.div`
   .cancel-btn{
