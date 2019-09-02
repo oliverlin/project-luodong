@@ -22,7 +22,7 @@ function updateTask({ devId, taskId, gameState }) {
   task.resolved += dev[task.taskType]
   task.consumedTick += 1
   if (task.consumedTick >= minimumTick && task.resolved >= task.complexity) {
-    task.gameState = 'completed'
+    task.state = 'completed'
     task.progress = 1
     delete gameState.ongoingMap[devId]
   } else {
@@ -68,6 +68,16 @@ function updateIssues(gameState) {
       }
     }
   })
+}
+
+function computeScore(issues) {
+  return issues.reduce((memo, issue) => {
+    let score = issue.penalty
+    if (issue.state === 'completed') {
+      score += issue.score
+    }
+    return memo + score
+  }, 0)
 }
 
 function newGame(debugState = {}) {
@@ -201,6 +211,10 @@ function newGame(debugState = {}) {
         developers,
         issues
       }
+    },
+    score: function() {
+      const issues = Object.values(issueMap)
+      return computeScore(issues)
     },
     debug: function() {
       return {
