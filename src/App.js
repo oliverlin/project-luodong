@@ -4,72 +4,15 @@ import ResourcePanel from './containers/ResourcePanel'
 import styled from 'styled-components'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { DROPPABLE_RESOURCE_PANEL } from './constants'
+import Game from './engine/game'
 
-const mockedResources = ['hi', 'me', 'no', 'way']
-const prepareResources = (resources) => {
-  return resources.map((res, index) => {
-    return {
-      label: res
-    }
-  })
-}
-// const defaultResources = prepareResources(mockedResources)
+// const state = Game.state()
 
-const defaultResources = [{
-    backend: 15,
-    cooldown: 7,
-    design: 2,
-    frontend: 15,
-    id: 'ced99000-cd3b-11e9-b6ef-fbc0080f2bb91',
-    name: 'Ben',
-    used: true
-  },
-  {
-    backend: 3,
-    cooldown: 0,
-    design: 12,
-    frontend: 12,
-    id: 'ced99000-cd3b-11e9-b6ef-fbc0080f2bb92',
-    name: 'Oliver',
-    used: false
-  },
-  {
-    backend: 19,
-    cooldown: 0,
-    design: 5,
-    frontend: 5,
-    id: 'ced99000-cd3b-11e9-b6ef-fbc0080f2bb93',
-    name: 'Bruce',
-    used: false
-  }]
 
-const defaultIssues = [{
-  id: '088649d1-cd35-11e9-ab98-67b9481d4d551',
-  tasks: [{
-    id: '0886bf00-cd35-11e9-ab98-67b9481d4d552',
-    devId: '088649d0-cd35-11e9-ab98-67b9481d4d553',
-    progress: 8,
-    complexity: 83,
-    taskType: 'design',
-    state: 'created'
-  },
-  {
-    id: '08873431-cd35-11e9-ab98-67b9481d4d554',
-    devId: null,
-    progress: 0,
-    complexity: 38,
-    taskType: 'design',
-    state: 'created'
-  }],
-  required: false,
-  expiredAt: 19
-},
-{
-  id: '08873430-cd35-11e9-ab98-67b9481d4d555',
-  tasks: [],
-  required: false,
-  expiredAt: 19
-}]
+// game.assignDeveloper(devId, taskId)
+// game.nextTick()
+// game.removeDeveloper(devId)
+// game.state()
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list)
@@ -81,18 +24,76 @@ const reorder = (list, startIndex, endIndex) => {
 
 class App extends Component {
   state = {
-    resources: defaultResources,
-    issues: defaultIssues
+    resources: [],
+    issues: [],
+    intervalId: null,
+    game: null,
+    isDragging: false
+  }
+
+  componentDidMount(){
+    const game = this._setUpGame()
+    this.setState({ game }, this._startTicker)
+  }
+
+  _setUpGame = () => {
+    const game = Game.newGame()
+    return game
+  }
+
+  _startTicker = () => {
+    const intervalId = window.setInterval(this._tick, 1000)
+    this.setState({ intervalId })
+  }
+
+  _tick = () => {
+    this.state.game.nextTick()
+    this._refreshData()
+
+  }
+
+  _refreshData = () => {
+    const { isDragging, game } = this.state
+    const gameState = game.state()
+    console.log(gameState.issues)
+    console.log('isDragging: ', isDragging)
+    if (!isDragging) {
+      this.setState({
+        issues: gameState.issues,
+        resources: gameState.developers
+      })
+    }
+  }
+
+  _mapResourcesToIssues = () => {
+    const { resources, issues } = this.state
+    return issues.map(issue=>{
+
+      const xx= {
+        ...issue,
+        tasks: issue.tasks.map(task => {
+          const resourceId = task.devId
+          const resource = resources.find(res => res.id === resourceId)
+          return resource
+            ? { ...task, dev: resource }
+            : task
+        })
+      }
+      return xx
+    })
   }
 
   render() {
     const { resources, issues } = this.state
+    const issuesWithResources = this._mapResourcesToIssues()
     return (
-      <DragDropContext onDragEnd={this._onDragEnd}>
+      <DragDropContext
+        onBeforeDragStart={this._toggleDragging(true)}
+        onDragEnd={this._onDragEnd}>
         <StyledLayout>
           <div className='production-line'>
             <ProductionLine
-              issues={issues} />
+              issues={issuesWithResources} />
           </div>
           <div className='resource-panel'>
             <ResourcePanel
@@ -101,10 +102,14 @@ class App extends Component {
         </StyledLayout>
       </DragDropContext>
     )
+  }
 
+  _toggleDragging = isDragging => () => {
+    this.setState({ isDragging })
   }
 
   _onDragEnd = (result) => {
+    this._toggleDragging(false)()
     // dropped outside the list
     if (!result.destination) {
       return
@@ -113,12 +118,15 @@ class App extends Component {
     if (result.destination.droppableId === DROPPABLE_RESOURCE_PANEL) {
       this._reorder(result)
     } else {
-      this._assignResource(result)
+      const devId = result.draggableId
+      const taskId = result.destination.droppableId
+      this._assignResource(devId, taskId)
     }
   }
 
-  _assignResource = (result) => {
-    console.log(result)
+  _assignResource = (devId, taskId) => {
+    this.state.game.assignDeveloper(devId, taskId)
+    this._refreshData()
   }
 
   _reorder = (result) => {

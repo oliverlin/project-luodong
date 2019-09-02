@@ -21,6 +21,7 @@ const Issue = ({
                 key={task.id}
                 id={task.id}
                 devId={task.devId}
+                dev={task.dev}
                 progress={task.progress}
                 complexity={task.complexity}
                 taskType={task.taskType}
@@ -29,7 +30,6 @@ const Issue = ({
           })
         }
       </StyledTaskList>
-      )}
     </StyledIssue>
   )
 }

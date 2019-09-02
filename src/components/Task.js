@@ -8,7 +8,8 @@ const Task = ({
   progress,
   complexity,
   taskType,
-  state
+  state,
+  dev
 }) => {
   return (
     <StyledTask>
@@ -18,6 +19,7 @@ const Task = ({
       <div>{complexity}</div>
       <div>{taskType}</div>
       <div>{state}</div>
+      {dev ? dev.name : 'null'}
 
       <Droppable droppableId={id}>
         {(droppableProvided, droppableSnapshot) => (
