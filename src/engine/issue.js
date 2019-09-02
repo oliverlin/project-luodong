@@ -7,11 +7,11 @@ function newIssue(startedAt) {
   const expiredAt = startedAt + duration
   const required = Math.random() > 0.8
   const taskCount = 1 + Math.floor(Math.random() * 3)
-  const score = 100 + Math.floor(Math.random() * duration * 50)
   const penalty = 0
   const state = 'created'
   let i = 0
   const tasks = []
+  let score = 0
   while (i < taskCount) {
     const taskType = ['frontend', 'backend', 'design'][
       Math.floor(Math.random() * 3)
@@ -25,6 +25,7 @@ function newIssue(startedAt) {
       newTask({ taskType, expiredAt, complexity, difficulty, issueId: id })
     )
     i += 1
+    score += complexity
   }
 
   return {
