@@ -11,12 +11,13 @@ const Issue = ({
   position,
   required,
   onRemove,
-  expiredAt
+  expiredAt,
+  resuired
 }) => {
   return (
     <StyledIssue position={position}>
       <div className='container'>
-        <div>{required}</div>
+        <div>{required ? 'True' : ''}</div>
         {/* <div>{expiredAt}</div> */}
         <StyledTaskList>
           {
