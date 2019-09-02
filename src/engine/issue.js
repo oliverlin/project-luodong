@@ -17,7 +17,7 @@ function newIssue(startedAt) {
       Math.floor(Math.random() * 3)
     ]
 
-    const complexityFactor = 24.5
+    const complexityFactor = 10
     const complexity =
       10 + Math.floor(Math.random() * MaxStrength * complexityFactor)
     tasks.push(newTask({ taskType, expiredAt, complexity, issueId: id }))

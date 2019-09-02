@@ -17,7 +17,7 @@ function updateTask({ devId, taskId, gameState }) {
   }
 
   // Each task need at lesat **minimumTick** tick to complete
-  const minimumTick = 10
+  const minimumTick = 6
 
   task.resolved += dev[task.taskType]
   task.consumedTick += 1
