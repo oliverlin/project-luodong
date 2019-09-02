@@ -236,16 +236,14 @@ function newGame(debugState = {}) {
         })
         return Object.assign({}, issue, { tasks })
       })
+      const score = computeScore(issues)
 
       return {
         currentTime,
         developers,
-        issues
+        issues,
+        score
       }
-    },
-    score: function() {
-      const issues = Object.values(issueMap)
-      return computeScore(issues)
     },
     debug: function() {
       return {
