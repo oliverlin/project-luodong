@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 const ResourceItem = ({
   resourceName,
+  draggableId,
   backend,
   cooldown,
   design,
@@ -11,10 +12,9 @@ const ResourceItem = ({
   used,
   index
 }) => {
-
   return (
     <Draggable
-      draggableId={resourceName}
+      draggableId={draggableId}
       // isDragDisabled={index===1}
       index={index}>
       {(draggableProvided, draggableSnapshot) => (
