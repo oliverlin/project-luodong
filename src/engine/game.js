@@ -51,8 +51,7 @@ function updateDevs(gameState) {
   })
 }
 
-function updateIssues(gameState) {
-  const currentTime = gameState.currentTime
+function updateIssues(gameState, currentTime) {
   Object.values(gameState.issueMap).forEach(issue => {
     if (issue.state !== 'completed') {
       const tasks = issue.tasks
@@ -62,6 +61,7 @@ function updateIssues(gameState) {
       } else {
         const delay = currentTime - issue.expiredAt
         if (issue.required) {
+          console.log(currentTime)
           if (delay === 5) {
             issue.penalty = Math.floor(issue.score * 0.5)
           } else if (delay === 10) {
@@ -100,7 +100,7 @@ function updateIssues(gameState) {
 
 function computeScore(issues) {
   return issues.reduce((memo, issue) => {
-    let score = issue.penalty
+    let score = issue.penalty * -1
     if (issue.state === 'completed') {
       score += issue.score
     }
@@ -124,7 +124,6 @@ function newGame(debugState = {}) {
     delete ongoingMap[devId]
   }
   const state = {
-    currentTime,
     developerMap,
     issueMap,
     taskMap,
@@ -154,7 +153,7 @@ function newGame(debugState = {}) {
     syncIssue()
     updateTasks(state)
     updateDevs(state)
-    updateIssues(state)
+    updateIssues(state, currentTime)
   }
 
   const assignDeveloper = function(devId, taskId) {
