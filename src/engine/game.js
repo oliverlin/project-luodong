@@ -60,10 +60,12 @@ function updateIssues(gameState) {
         issue.state = 'completed'
       } else {
         const delay = gameState.currentTime - issue.expiredAt
-        if (delay === 5) {
-          issue.penalty = Math.floor(issue.score * 0.5)
-        } else if (delay === 10) {
-          issue.penalty = issue.score
+        if (issue.required) {
+          if (delay === 5) {
+            issue.penalty = Math.floor(issue.score * 0.5)
+          } else if (delay === 10) {
+            issue.penalty = issue.score
+          }
         }
       }
     }
