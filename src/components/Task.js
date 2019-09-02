@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { Droppable } from 'react-beautiful-dnd'
 import SkillBar from './SkillBar'
+import Difficulty from './Difficulty'
 
 const Task = ({
   id,
   devId,
   progress,
-  complexity,
+  difficulty,
   taskType,
   state,
   onRemove,
@@ -35,6 +36,7 @@ const Task = ({
           type={taskType}
           value={progress}/>
       </div>
+      <Difficulty value={difficulty} />
       {/* <div>{state}</div> */}
       {
         dev ? (

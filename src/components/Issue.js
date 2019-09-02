@@ -26,6 +26,7 @@ const Issue = ({
                   key={task.id}
                   id={task.id}
                   onRemove={onRemove}
+                  difficulty={task.difficulty}
                   devId={task.devId}
                   dev={task.dev}
                   progress={task.progress}
