@@ -1,5 +1,5 @@
 export const DROPPABLE_RESOURCE_PANEL = 'DROPPABLE_RESOURCE_PANEL'
-export const TICK_PER_MS = 400
+export const TICK_PER_MS = 500
 
 export const getColor = type => {
   switch (type) {
