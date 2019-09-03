@@ -16,8 +16,13 @@ const Dev = ({
   frontend,
   cooldownReason,
   used,
+  onClick,
+  actionText,
   avatar
 }) => {
+  const reason = cooldownReason === 'manual'
+    ? 'Context switch'
+    : cooldownReason
   return (
     <StyledResource
       isDragging={isDragging}
@@ -39,7 +44,7 @@ const Dev = ({
                 CD {cooldown}
               </div>
               <div className='reason'>
-                {cooldownReason}
+                {reason}
               </div>
             </div>
           )
@@ -48,6 +53,15 @@ const Dev = ({
           <div className='name'>{resourceName}</div>
         </div>
       </div>
+      {
+        onClick && (
+          <div
+            className='cancel'
+            onClick={onClick}>
+            {actionText}
+          </div>
+        )
+      }
       {
         used && (
           <div className='busy'>BUSY</div>
@@ -128,6 +142,26 @@ const StyledResource = styled.div`
     background: #555;
     color: #aaa;
     font-weight: bold
+  }
+  .cancel{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.85);
+    color: #f25158;
+    display: none;
+    cursor: pointer;
+    align-items: center;
+    text-align: center;
+    z-index: 3;
+    line-height: 48px;
+  }
+  &:hover{
+    .cancel{
+      display: block;
+    }
   }
 `
 

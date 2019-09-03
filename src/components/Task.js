@@ -44,11 +44,10 @@ const Task = ({
               avatar={dev.avatar}
               design={dev.design}
               frontend={dev.frontend}
-              used={dev.used}
+              // used={dev.used}
+              onClick={_onRemove(dev.id)}
+              actionText='Cancel'
             />
-            <div className='cancel-btn' onClick={_onRemove(dev.id)}>
-              Cancel
-            </div>
           </StyledWorker>
         ) : (
           <Droppable droppableId={id} isCombineEnabled>
