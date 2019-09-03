@@ -6,6 +6,7 @@ function newDeveloper({ name, backend, frontend, design }) {
   const id = uuidv1()
   const cooldown = 0
   const cooldownReason = ''
+  const avatar = `https://robohash.org/${id}.png?size=100x100&set=set5`
   return {
     id,
     name,
@@ -13,7 +14,8 @@ function newDeveloper({ name, backend, frontend, design }) {
     frontend,
     design,
     cooldown,
-    cooldownReason
+    cooldownReason,
+    avatar
   }
 }
 
