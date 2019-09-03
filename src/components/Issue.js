@@ -20,7 +20,7 @@ const Issue = ({
     <StyledIssue allFinished={allFinished} position={position}>
       {
         allFinished ? (
-          <div>
+          <div className='completed'>
             Issue completed!
           </div>
         ) : (
@@ -76,6 +76,9 @@ const StyledIssue = styled.div.attrs(props => ({
   transition-duration: ${tickFrequencyInSec}s;
   justify-content: center;
   opacity: ${props => props.allFinished ? 0.4 : 1};
+  .completed{
+    color: #fff;
+  }
   .container{
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(100, 100, 100, 0.4);
