@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Droppable } from 'react-beautiful-dnd'
 import SkillBar from './SkillBar'
 import Difficulty from './Difficulty'
+import Dev from './Dev'
 import { getColor } from '../constants'
 
 const Task = ({
@@ -33,7 +34,18 @@ const Task = ({
       {
         dev ? (
           <StyledWorker>
-            {dev.name}
+            <Dev
+              key={dev.id}
+              draggableId={dev.id}
+              cooldownReason={dev.cooldownReason}
+              resourceName={dev.name}
+              backend={dev.backend}
+              cooldown={dev.cooldown}
+              avatar={dev.avatar}
+              design={dev.design}
+              frontend={dev.frontend}
+              used={dev.used}
+            />
             <div className='cancel-btn' onClick={_onRemove(dev.id)}>
               Cancel
             </div>
@@ -82,8 +94,8 @@ const StyledTask = styled.div`
   background: #fff;
   margin-right: 10px;
   overflow: hidden;
-  width: 80px;
-  height: 60px;
+  width: 120px;
+  height: 56px;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
   border-top-right-radius: 4px;
