@@ -5,13 +5,15 @@ const DeveloperGroups = require('./developerGroups')
 function newDeveloper({ name, backend, frontend, design }) {
   const id = uuidv1()
   const cooldown = 0
+  const cooldownReason = ''
   return {
     id,
     name,
     backend,
     frontend,
     design,
-    cooldown
+    cooldown,
+    cooldownReason
   }
 }
 

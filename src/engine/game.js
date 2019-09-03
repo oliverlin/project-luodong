@@ -24,7 +24,7 @@ class Game {
     this.developerStore.assignWork(devId, taskId)
   }
 
-  removeDeveloper(devId) {
+  removeDeveloper({ devId, reason = 'manual', cooldown = 10 }) {
     const dev = this.developerStore.find(devId)
     if (dev === undefined) {
       console.error(`dev ${devId} not found`)
@@ -32,7 +32,8 @@ class Game {
     }
 
     this.developerStore.releaseDeveloper(devId)
-    dev.cooldown = 10
+    dev.cooldown = cooldown
+    dev.cooldownReason = reason
   }
 
   nextTick() {
@@ -41,6 +42,7 @@ class Game {
     this.updateTasks()
     this.updateDevs()
     this.updateIssues()
+    this.randomRelease()
     this.scoreSeries.push(this.computeScore(this.issueStore.list()))
   }
 
@@ -120,6 +122,9 @@ class Game {
     this.developerStore.list().forEach(dev => {
       if (dev.cooldown > 0) {
         dev.cooldown = dev.cooldown - 1
+        if (dev.cooldown === 0) {
+          dev.cooldownReason = ''
+        }
       }
     })
   }
@@ -180,6 +185,33 @@ class Game {
       return memo + score
     }, 0)
   }
+
+  randomRelease() {
+    const p = 0.1
+    const removeDeveloper = this.removeDeveloper.bind(this)
+    const reasonMap = {
+      sick: 5,
+      vacation: 10,
+      marriage: 10,
+      conference: 3,
+      jail: 10
+    }
+    const reasons = Object.keys(reasonMap)
+    if (p >= Math.random()) {
+      const records = this.developerStore.workingDeveloperRecords()
+      if (records.length > 0) {
+        const { developer } = records[0]
+        const devId = developer.id
+        const reason = reasons[Math.floor(Math.random() * reasons.length)]
+        const cooldown = reasonMap[reason]
+        removeDeveloper({
+          devId: devId,
+          reason: reason,
+          cooldown: cooldown
+        })
+      }
+    }
+  }
 }
 
 function newGame(duration = 120) {
@@ -187,7 +219,9 @@ function newGame(duration = 120) {
   const game = new Game(devs, duration)
   return {
     assignDeveloper: game.assignDeveloper.bind(game),
-    removeDeveloper: game.removeDeveloper.bind(game),
+    removeDeveloper: function(devId) {
+      game.removeDeveloper.bind(game)({ devId })
+    },
     nextTick: game.nextTick.bind(game),
     state: game.state.bind(game)
   }
