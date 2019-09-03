@@ -4,7 +4,7 @@ import ResourcePanel from './containers/ResourcePanel'
 import styled from 'styled-components'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { TICK_PER_MS, DROPPABLE_RESOURCE_PANEL } from './constants'
-import Game from './engine/game'
+import { newGame } from './engine/game'
 import ResultModal from './components/ResultModal'
 // const state = Game.state()
 // 20/0.8
@@ -46,7 +46,7 @@ class App extends Component {
   }
 
   _setUpGame = () => {
-    const game = Game.newGame()
+    const game = newGame()
     return game
   }
 
