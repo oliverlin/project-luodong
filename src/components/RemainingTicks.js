@@ -22,7 +22,7 @@ const RemainingTicks = ({ ticks }) => {
 export default RemainingTicks
 
 const StyledContainer = styled.div`
-  margin: -10px -10px 0 -10px;
+  margin: -10px -10px 10px -10px;
   font-size: 12px;
   background: #fff;
   padding: 10px 10px 0 10px;

@@ -45,7 +45,7 @@ export default CurrentScore
 
 const StyledContainer = styled.div`
   background: #fff;
-  margin: 0 -10px 10px -10px;
+  margin: -10px -10px 10px -10px;
   padding: 10px;
   .score{
     font-size: 14px;
