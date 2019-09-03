@@ -60,32 +60,32 @@ module.exports = [
     },
     {
         Owen: {
-            frontend: 40,
-            backend: 40,
-            design: 40
+            frontend: 30,
+            backend: 120,
+            design: 50
         },
         Wesely: {
-            frontend: 40,
-            backend: 40,
-            design: 40
+            frontend: 100,
+            backend: 60,
+            design: 30
         },
         Richard: {
-            frontend: 40,
-            backend: 40,
-            design: 40
+            frontend: 120,
+            backend: 30,
+            design: 50
         },
         Wendy: {
-            frontend: 40,
-            backend: 40,
-            design: 40
+            frontend: 90,
+            backend: 30,
+            design: 30
         },
         Robert: {
-            frontend: 40,
+            frontend: 30,
             backend: 40,
-            design: 40
+            design: 110,
         },
         Roger: {
-            frontend: 40,
+            frontend: 80,
             backend: 40,
             design: 40
         }
