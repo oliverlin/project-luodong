@@ -1,13 +1,13 @@
 import React from 'react'
 import ResourceItem from '../components/ResourceItem'
+import CurrentScore from '../components/CurrentScore'
 import { Droppable } from 'react-beautiful-dnd'
 import { DROPPABLE_RESOURCE_PANEL } from '../constants'
-import CountUp from 'react-countup'
 
 const ResourcePanel = ({ resources, score }) => {
   return (
     <div>
-      <div>Score: <CountUp end={score}/></div>
+      <CurrentScore value={score}/>
       <Droppable droppableId={DROPPABLE_RESOURCE_PANEL}>
         {(droppableProvided, droppableSnapshot) => (
           <div

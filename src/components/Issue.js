@@ -2,44 +2,59 @@ import React from 'react'
 import styled from 'styled-components'
 import Task from './Task'
 import { TICK_PER_MS } from '../constants'
+import Shaker from './Shaker'
 
 const tickFrequencyInSec = TICK_PER_MS / 1000 - 0.05
 
 const Issue = ({
-  id,
   tasks,
   position,
   required,
   onRemove,
-  expiredAt,
+  percentage,
   resuired
 }) => {
+  const allFinished = !tasks.some(task => task.progress !== 1)
+  const strengthPercentage = percentage
   return (
-    <StyledIssue position={position}>
-      <div className='container'>
-        <div>{required ? 'True' : ''}</div>
-        {/* <div>{expiredAt}</div> */}
-        <StyledTaskList>
-          {
-            tasks.map(task => {
-              return (
-                <Task
-                  key={task.id}
-                  id={task.id}
-                  onRemove={onRemove}
-                  difficulty={task.difficulty}
-                  devId={task.devId}
-                  dev={task.dev}
-                  progress={task.progress}
-                  complexity={task.complexity}
-                  taskType={task.taskType}
-                  state={task.state} />
-              )
-            })
-          }
-        </StyledTaskList>
-      </div>
-      {/* <div>{id}</div> */}
+    <StyledIssue allFinished={allFinished} position={position}>
+      {
+        allFinished ? (
+          <div>
+            Issue completed!
+          </div>
+        ) : (
+            <Shaker strengthPercentage={strengthPercentage}>
+              <div className='container'>
+                {
+                  required && (
+                    <div className='critical'>Critical!</div>
+                  )
+                }
+
+                <StyledTaskList>
+                  {
+                    tasks.map(task => {
+                      return (
+                        <Task
+                          key={task.id}
+                          id={task.id}
+                          onRemove={onRemove}
+                          difficulty={task.difficulty}
+                          devId={task.devId}
+                          dev={task.dev}
+                          progress={task.progress}
+                          complexity={task.complexity}
+                          taskType={task.taskType}
+                          state={task.state} />
+                      )
+                    })
+                  }
+                </StyledTaskList>
+              </div>
+            </Shaker>
+          )
+      }
     </StyledIssue>
   )
 }
@@ -61,13 +76,20 @@ const StyledIssue = styled.div.attrs(props => ({
   transition-timing-function: linear;
   transition-duration: ${tickFrequencyInSec}s;
   justify-content: center;
+  opacity: ${props => props.allFinished ? 0.4 : 1};
   .container{
-    /* width: auto; */
-    /* margin: 0 auto; */
-    background: grey;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(100, 100, 100, 0.4);
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .critical{
+    color: #ff5555;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
   }
 `
 const StyledTaskList = styled.div`
   display: flex;
-  padding: 10px;
 `

@@ -170,11 +170,10 @@ const StyledLayout = styled.div`
   overflow: hidden;
   .production-line{
     flex: 1;
-    background: blue;
   }
   .resource-panel{
     flex: 0 0 100px;
     padding: 10px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.6);
   }
 `

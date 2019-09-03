@@ -3,18 +3,16 @@ import styled from 'styled-components'
 import { Droppable } from 'react-beautiful-dnd'
 import SkillBar from './SkillBar'
 import Difficulty from './Difficulty'
+import { getColor } from '../constants'
 
 const Task = ({
   id,
-  devId,
   progress,
   difficulty,
   taskType,
-  state,
   onRemove,
   dev
 }) => {
-
   const _onRemove = devId => () => {
     onRemove(devId)
   }
@@ -26,18 +24,12 @@ const Task = ({
   }
   return (
     <StyledTask>
-      {/* {id} */}
-      {/* {devId} */}
-      {/* <div>{complexity}</div> */}
-      {/* <div>{taskType}</div> */}
       <div>
         <SkillBar
           withBackground
           type={taskType}
           value={progress}/>
       </div>
-      <Difficulty value={difficulty} />
-      {/* <div>{state}</div> */}
       {
         dev ? (
           <StyledWorker>
@@ -51,14 +43,12 @@ const Task = ({
             {(droppableProvided, droppableSnapshot) => (
                 <StyledDropZone isHovering={droppableSnapshot.isDraggingOver} ref={droppableProvided.innerRef}>
                   <div className='wi'>
-                    <div  index={0} className='a'></div>
-                    <div  index={1} className='b'></div>
+                    <div  index={0} className='a'>
+                      <Difficulty value={difficulty} color={getColor(taskType)}/>
+                    </div>
+                    <div  index={1} className='b'>Drop here!</div>
                     <div  index={2} className='c'></div>
-                    {/* <div className='dz'>
-                      {droppableProvided.placeholder}
-                    </div> */}
-                    {droppableProvided.placeholder && <div className='xxx'>Drop</div>}
-                    <div style={{ display: 'none' }}>{droppableProvided.placeholder}</div>
+                    {droppableProvided.placeholder}
                   </div>
                 </StyledDropZone>
             )}
@@ -74,37 +64,26 @@ export default Task
 
 
 const StyledDropZone = styled.div`
-  /* width: 50px; */
-  /* height: 30px; */
-  background: ${props => props.isHovering ? '#999' : '#e1e1e1'};
+  background: ${props => props.isHovering ? '#e1e1e1' : '#fff'};
   padding: 5px;
-  /* padding: 10px; */
-  .wi{
-    /* margin-top: -30px; */
-    /* height: 30px; */
-    /* overflow: hidden; */
-  }
-  .a{
-    height: 30px;
+  .a, .b, .c{
+    height: 20px;
   }
   .b{
-    height: 30px;
-  }
-  .c{
-    height: 30px;
-  }
-  .dz{
-    background: red;
+    font-size: 12px;
+    text-align: center;
+    color: #ababab;
+    font-weight: bold;
+    font-family: 'Modak', cursive;
   }
 `
 
 const StyledTask = styled.div`
   background: #fff;
-  /* padding: 10px; */
   margin-right: 10px;
   overflow: hidden;
   width: 80px;
-  height: 40px;
+  height: 60px;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
   border-top-right-radius: 4px;

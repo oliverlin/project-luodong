@@ -5,9 +5,8 @@ import groupBy from 'lodash/groupBy'
 import times from 'lodash/times'
 import styled from 'styled-components'
 
-// const FRAMES = 180
-const PRODUCTION_ZONE_PERCENTAGE = 0.7
-const ITEM_HEIGHT = 50
+// const PRODUCTION_ZONE_PERCENTAGE = 0.7
+const OFFSET_HEIGHT = 120
 const COLUMNS = 3
 
 const ProductionLine = ({ issues, currentTime, onRemove }) => {
@@ -16,17 +15,18 @@ const ProductionLine = ({ issues, currentTime, onRemove }) => {
   const _renderIssues = () => {
     return issues.map(issue => {
       const { expiredAt, startedAt } = issue
-      let percentage
+      let reversedPercentage
       const totalTime = expiredAt - startedAt
       const remainingTime = expiredAt - currentTime
-      percentage = Math.abs(remainingTime / totalTime)
-      console.log(percentage)
-      if (percentage > 1) {
-        percentage = 1
+      reversedPercentage = Math.abs(remainingTime / totalTime)
+      if (reversedPercentage > 1) {
+        reversedPercentage = 1
       }
-      const position = Math.floor((1 - percentage) * (height * PRODUCTION_ZONE_PERCENTAGE + ITEM_HEIGHT))
+      const percentage = 1 - reversedPercentage
+      const position = Math.floor((percentage) * (height + OFFSET_HEIGHT))
       return {
         ...issue,
+        percentage,
         position
       }
     })
@@ -38,13 +38,11 @@ const ProductionLine = ({ issues, currentTime, onRemove }) => {
   }
   const groupedIssues = groupIssuesByColumn(issuesWithPosition)
 
-  // const rows = times(FRAMES, filterIssues)
   const cols = times(COLUMNS, (index) => {
     return (
       <div className='col'>
         <StyledList>
           {
-            // rows
             (groupedIssues[index] || [])
               .filter(issue => issue.expiredAt > currentTime)
               .map(issue => {
@@ -54,6 +52,7 @@ const ProductionLine = ({ issues, currentTime, onRemove }) => {
                     id={issue.id}
                     tasks={issue.tasks}
                     onRemove={onRemove}
+                    percentage={issue.percentage}
                     position={issue.position}
                     required={issue.required}
                     expiredAt={issue.expiredAt} />
@@ -69,19 +68,6 @@ const ProductionLine = ({ issues, currentTime, onRemove }) => {
       <StyledCols>
         {cols}
       </StyledCols>
-
-      {/* {
-        issues.map(issue => {
-          return (
-            <Issue
-              key={issue.id}
-              id={issue.id}
-              tasks={issue.tasks}
-              required={issue.required}
-              expiredAt={issue.expiredAt} />
-          )
-        })
-      } */}
     </StyledListWrapper>
   )
 }
@@ -97,15 +83,12 @@ const StyledCols = styled.div`
 `
 
 const StyledListWrapper = styled.div`
-  /* transform: translateY(${0 - ITEM_HEIGHT}px); */
-  transform: translateY(-20px);
-  background: #fff;
-  height: ${100 * PRODUCTION_ZONE_PERCENTAGE}%;
+  margin-top: -120px;
+  height: calc(100% + ${OFFSET_HEIGHT}px);
 `
 
 const StyledList = styled.div`
-  height: 100%;
+  height: calc(100% + ${OFFSET_HEIGHT}px);
   display: flex;
-  background: green;
   flex-direction: column;
 `
