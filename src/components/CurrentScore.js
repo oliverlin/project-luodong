@@ -21,7 +21,6 @@ class CurrentScore extends Component {
   }
 
   _setDeceasingScore = (decreasedScore) => {
-    console.log('decreasedScore', decreasedScore)
     this.setState({ decreasedScore })
   }
 
@@ -30,7 +29,10 @@ class CurrentScore extends Component {
     const { decreasedScore } = this.state
     return (
       <StyledContainer>
-        <div className='score'>Score: <CountUp end={value} /></div>
+        <div className='score'>
+          Revenue:
+          <CountUp end={value} />
+        </div>
         {
           <StyledDecreasedScores show={decreasedScore > 0}>
             -<CountUp duration={0.5} end={decreasedScore} />
@@ -45,9 +47,11 @@ export default CurrentScore
 
 const StyledContainer = styled.div`
   background: #fff;
-  margin: -10px -10px 10px -10px;
+  margin: 0;
   padding: 10px;
   .score{
+    display: flex;
+    justify-content: space-between;
     font-size: 14px;
     white-space: nowrap;
     color: #4185f4;

@@ -31,7 +31,6 @@ const Issue = ({
                     <div className='critical'>Critical!</div>
                   )
                 }
-
                 <StyledTaskList>
                   {
                     tasks.map(task => {
@@ -78,13 +77,13 @@ const StyledIssue = styled.div.attrs(props => ({
   justify-content: center;
   opacity: ${props => props.allFinished ? 0.4 : 1};
   .container{
-    background: rgba(0,0,0,0.7);
+    background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(100, 100, 100, 0.4);
     border-radius: 8px;
     padding: 10px;
   }
   .critical{
-    color: #ff5555;
+    color: #fff;
     font-size: 13px;
     font-weight: bold;
     margin-bottom: 5px;

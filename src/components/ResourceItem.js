@@ -10,6 +10,7 @@ const ResourceItem = ({
   cooldown,
   design,
   frontend,
+  cooldownReason,
   used,
   index
 }) => {
@@ -30,17 +31,24 @@ const ResourceItem = ({
           <SkillBar compact type='frontend' value={frontend / 120} />
           {
             cooldown > 0 && (
-              <div className='cd'>CD {cooldown}</div>
+              <div className='cd'>
+                <div className='time'>
+                  CD {cooldown}
+                </div>
+                <div className='reason'>
+                  {cooldownReason}
+                </div>
+              </div>
             )
           }
           <div className='info'>
             <div className='name'>{resourceName}</div>
-            {
-              used && (
-                <div className='busy'>BUSY</div>
-              )
-            }
           </div>
+          {
+            used && (
+              <div className='busy'>BUSY</div>
+            )
+          }
         </StyledResource>
       )}
     </Draggable>
@@ -51,7 +59,7 @@ export default ResourceItem
 
 const StyledResource = styled.div`
   width: 80px;
-  height: 28px;
+  height: 48px;
   background: #fff;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -68,16 +76,23 @@ const StyledResource = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
+    height: 48px;
     background: rgba(20, 20, 20, 0.2);
     z-index: 2;
-    background: #f97376c7;
-    color: #fff;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 48px;
+    background: #f97376d9;
     color: #fff;
     text-align: left;
-    padding-left: 10px;
+    padding-left: 5px;
+    padding-top: 3px;
+    text-shadow: 0 1px 5px rgba(189, 65, 68, 0.9);
+    font-weight: bold;
+    .time{
+      font-size: 20px;
+      line-height: 1.1;
+    }
+    .reason{
+      font-size: 12px;
+    }
   }
   .info{
     position: relative;
@@ -90,9 +105,11 @@ const StyledResource = styled.div`
       font-size: 12px;
       font-weight: bold;
     }
-    .busy{
-      color: #999;
-      font-size: 12px;
-    }
+  }
+  .busy{
+    position: absolute;
+    background: rgba(100, 100, 100, 0.2);
+    color: #999;
+    font-size: 12px;
   }
 `

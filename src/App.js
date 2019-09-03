@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { TICK_PER_MS, DROPPABLE_RESOURCE_PANEL } from './constants'
 import Game from './engine/game'
-
+import ResultModal from './components/ResultModal'
 // const state = Game.state()
 // 20/0.8
 // game.assignDeveloper(devId, taskId)
@@ -30,7 +30,8 @@ class App extends Component {
     game: null,
     isDragging: false,
     score: 0,
-    remainingTicks: null
+    remainingTicks: null,
+    gameEnded: false
   }
 
   componentDidMount(){
@@ -66,9 +67,18 @@ class App extends Component {
     this._refreshData()
   }
 
+  _endGame = () => {
+    this._stopTicker()
+    this.setState({ gameEnded: true })
+  }
+
   _refreshData = () => {
     const { isDragging, game } = this.state
     const gameState = game.state()
+    if (gameState.remainingTicks === 0){
+      console.warn('END', gameState.remainingTicks)
+      this._endGame()
+    }
     if (!isDragging) {
       this.setState({
         currentTime: gameState.currentTime,
@@ -97,7 +107,7 @@ class App extends Component {
   }
 
   render() {
-    const { resources, currentTime, score, remainingTicks } = this.state
+    const { resources, currentTime, score, remainingTicks, gameEnded } = this.state
     const issuesWithResources = this._mapResourcesToIssues()
     return (
       <DragDropContext
@@ -117,6 +127,7 @@ class App extends Component {
               remainingTicks={remainingTicks} />
           </div>
         </StyledLayout>
+        <ResultModal show={gameEnded}/>
       </DragDropContext>
     )
   }
@@ -176,8 +187,7 @@ const StyledLayout = styled.div`
     flex: 1;
   }
   .resource-panel{
-    flex: 0 0 100px;
-    padding: 10px;
+    flex: 0 0 160px;
     background: rgba(255, 255, 255, 0.6);
   }
 `
