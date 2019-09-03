@@ -47,3 +47,28 @@ function draw() {
 }
 
 setInterval(draw, 35);
+
+const drawCat = () => {
+  var image = new Image()
+  var x = Math.random() * c.width
+  let y
+  let intervalId
+  var startDraw = () => {
+    var height = image.height / 2
+    var width = image.width / 2
+    if (y === undefined){
+      y = 1 - height
+    }
+    ctx.drawImage(image, x, y, width, height)
+    y = y + 1
+    if (y > c.height){
+      clearInterval(intervalId)
+    }
+  }
+  image.onload = function () {
+    intervalId = setInterval(startDraw, 5)
+  }
+  image.src = 'https://user-images.githubusercontent.com/2516344/64157978-44583f00-ce6a-11e9-8052-81676a14182f.png'
+}
+
+setInterval(drawCat, Math.random() * 2000 + 500)
