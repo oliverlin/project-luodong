@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const RemainingTicks = ({ ticks }) => {
-  const remainingWeeks = Math.floor(ticks / 4) + 1
+  const remainingWeeks = Math.floor(ticks / 10) + 1
   return (
     <StyledContainer>
       {

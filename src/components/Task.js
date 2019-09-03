@@ -53,11 +53,11 @@ const Task = ({
             {(droppableProvided, droppableSnapshot) => (
                 <StyledDropZone isHovering={droppableSnapshot.isDraggingOver} ref={droppableProvided.innerRef}>
                   <div className='wi'>
-                    <div  index={0} className='a'>
+                    <div index={0} className='a'>
                       <Difficulty value={difficulty} color={getColor(taskType)}/>
                     </div>
-                    <div  index={1} className='b'>Drop here!</div>
-                    <div  index={2} className='c'></div>
+                    <div index={1} className='b'>Drop here!</div>
+                    <div index={2} className='c'></div>
                     {droppableProvided.placeholder}
                   </div>
                 </StyledDropZone>
