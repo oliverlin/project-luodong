@@ -6,15 +6,12 @@ import Difficulty from './Difficulty'
 
 const Task = ({
   id,
-  devId,
   progress,
   difficulty,
   taskType,
-  state,
   onRemove,
   dev
 }) => {
-
   const _onRemove = devId => () => {
     onRemove(devId)
   }
@@ -26,10 +23,6 @@ const Task = ({
   }
   return (
     <StyledTask>
-      {/* {id} */}
-      {/* {devId} */}
-      {/* <div>{complexity}</div> */}
-      {/* <div>{taskType}</div> */}
       <div>
         <SkillBar
           withBackground
@@ -37,7 +30,6 @@ const Task = ({
           value={progress}/>
       </div>
       <Difficulty value={difficulty} />
-      {/* <div>{state}</div> */}
       {
         dev ? (
           <StyledWorker>
@@ -54,9 +46,6 @@ const Task = ({
                     <div  index={0} className='a'></div>
                     <div  index={1} className='b'></div>
                     <div  index={2} className='c'></div>
-                    {/* <div className='dz'>
-                      {droppableProvided.placeholder}
-                    </div> */}
                     {droppableProvided.placeholder && <div className='xxx'>Drop</div>}
                     <div style={{ display: 'none' }}>{droppableProvided.placeholder}</div>
                   </div>
@@ -74,16 +63,8 @@ export default Task
 
 
 const StyledDropZone = styled.div`
-  /* width: 50px; */
-  /* height: 30px; */
   background: ${props => props.isHovering ? '#999' : '#e1e1e1'};
   padding: 5px;
-  /* padding: 10px; */
-  .wi{
-    /* margin-top: -30px; */
-    /* height: 30px; */
-    /* overflow: hidden; */
-  }
   .a{
     height: 30px;
   }
@@ -100,11 +81,10 @@ const StyledDropZone = styled.div`
 
 const StyledTask = styled.div`
   background: #fff;
-  /* padding: 10px; */
   margin-right: 10px;
   overflow: hidden;
   width: 80px;
-  height: 40px;
+  height: 60px;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
   border-top-right-radius: 4px;

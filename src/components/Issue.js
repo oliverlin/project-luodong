@@ -6,40 +6,45 @@ import { TICK_PER_MS } from '../constants'
 const tickFrequencyInSec = TICK_PER_MS / 1000 - 0.05
 
 const Issue = ({
-  id,
   tasks,
   position,
   required,
   onRemove,
-  expiredAt,
   resuired
 }) => {
+  const allFinished = !tasks.some(task => task.progress !== 1)
   return (
-    <StyledIssue position={position}>
-      <div className='container'>
-        <div>{required ? 'True' : ''}</div>
-        {/* <div>{expiredAt}</div> */}
-        <StyledTaskList>
-          {
-            tasks.map(task => {
-              return (
-                <Task
-                  key={task.id}
-                  id={task.id}
-                  onRemove={onRemove}
-                  difficulty={task.difficulty}
-                  devId={task.devId}
-                  dev={task.dev}
-                  progress={task.progress}
-                  complexity={task.complexity}
-                  taskType={task.taskType}
-                  state={task.state} />
-              )
-            })
-          }
-        </StyledTaskList>
-      </div>
-      {/* <div>{id}</div> */}
+    <StyledIssue allFinished={allFinished} position={position}>
+      {
+        allFinished ? (
+          <div>
+            Issue completed!
+          </div>
+        ) : (
+            <div className='container'>
+              <div>{required ? 'True' : ''}</div>
+              <StyledTaskList>
+                {
+                  tasks.map(task => {
+                    return (
+                      <Task
+                        key={task.id}
+                        id={task.id}
+                        onRemove={onRemove}
+                        difficulty={task.difficulty}
+                        devId={task.devId}
+                        dev={task.dev}
+                        progress={task.progress}
+                        complexity={task.complexity}
+                        taskType={task.taskType}
+                        state={task.state} />
+                    )
+                  })
+                }
+              </StyledTaskList>
+            </div>
+          )
+      }
     </StyledIssue>
   )
 }
@@ -61,9 +66,8 @@ const StyledIssue = styled.div.attrs(props => ({
   transition-timing-function: linear;
   transition-duration: ${tickFrequencyInSec}s;
   justify-content: center;
+  opacity: ${props => props.allFinished ? 0.4 : 1};
   .container{
-    /* width: auto; */
-    /* margin: 0 auto; */
     background: grey;
   }
 `
