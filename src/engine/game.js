@@ -1,7 +1,7 @@
+import DeveloperStore from './developerStore'
+import IssueGenerator from './issueGenerator'
+import IssueStore from './issueStore'
 const Developer = require('./developer')
-const DeveloperStore = require('./developerStore')
-const IssueGenerator = require('./issueGenerator')
-const IssueStore = require('./issueStore')
 
 class Game {
   constructor(developers, duration) {
@@ -224,7 +224,7 @@ class Game {
   }
 }
 
-function newGame(duration = 120) {
+export function newGame(duration = 120) {
   const devs = Developer.newDevelopers()
   const game = new Game(devs, duration)
   return {
@@ -236,5 +236,3 @@ function newGame(duration = 120) {
     state: game.state.bind(game)
   }
 }
-
-module.exports.newGame = newGame

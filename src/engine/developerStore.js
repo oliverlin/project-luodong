@@ -58,4 +58,4 @@ class DeveloperStore {
   }
 }
 
-module.exports = DeveloperStore
+export default DeveloperStore

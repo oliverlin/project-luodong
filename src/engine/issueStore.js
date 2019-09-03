@@ -27,4 +27,4 @@ class IssueStore {
   }
 }
 
-module.exports = IssueStore
+export default IssueStore
