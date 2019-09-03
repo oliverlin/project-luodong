@@ -4,9 +4,10 @@ const IssueGenerator = require('./issueGenerator')
 const IssueStore = require('./issueStore')
 
 class Game {
-  constructor(developers) {
+  constructor(developers, duration) {
     this.developerStore = new DeveloperStore(developers)
     this.currentTime = 0
+    this.duration = duration
     this.issueGenerator = new IssueGenerator(6)
     this.issueStore = new IssueStore()
     this.syncIssue()
@@ -64,12 +65,13 @@ class Game {
     })
 
     const score = this.computeScore(issues)
-
+    const remainingTicks = this.duration - this.currentTime
     return {
       currentTime: this.currentTime,
       developers,
       issues,
-      score
+      score,
+      remainingTicks
     }
   }
 
@@ -176,9 +178,9 @@ class Game {
   }
 }
 
-function newGame() {
+function newGame(duration = 120) {
   const devs = Developer.newDevelopers()
-  const game = new Game(devs)
+  const game = new Game(devs, duration)
   return {
     assignDeveloper: game.assignDeveloper.bind(game),
     removeDeveloper: game.removeDeveloper.bind(game),

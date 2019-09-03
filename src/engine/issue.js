@@ -3,9 +3,9 @@ const MaxStrength = 120
 
 function newIssue(startedAt) {
   const id = uuidv1()
-  const duration = 10//40 + Math.floor(Math.random() * 40)
+  const duration = 10 //40 + Math.floor(Math.random() * 40)
   const expiredAt = startedAt + duration
-  const required = true//Math.random() > 0.8
+  const required = true //Math.random() > 0.8
   const taskCount = 1 + Math.floor(Math.random() * 3)
   const penalty = 0
   const state = 'created'
@@ -19,6 +19,7 @@ function newIssue(startedAt) {
 
     const maximumTick = 10
     const complexityFactor = MaxStrength * maximumTick
+    const minimumComplexity = 10
     const complexity = 10 + Math.floor(Math.random() * complexityFactor)
     const difficulty = 1 + Math.round((complexity * 4) / complexityFactor)
     tasks.push(
