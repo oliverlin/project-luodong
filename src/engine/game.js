@@ -71,13 +71,23 @@ class Game {
     const score = this.computeScore(issues)
     const remainingTicks = this.duration - this.currentTime
     const scoreSeries = this.scoreSeries
+    let star = 0
+    if (score >= 17000) {
+      star = 3
+    } else if (score >= 15000) {
+      star = 2
+    } else if (score >= 10000) {
+      star = 1
+    }
+
     return {
       currentTime: this.currentTime,
       developers,
       issues,
       score,
       remainingTicks,
-      scoreSeries
+      scoreSeries,
+      star
     }
   }
 
