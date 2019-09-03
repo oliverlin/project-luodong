@@ -75,6 +75,9 @@ class App extends Component {
   }
 
   _refreshData = () => {
+    if (this.gameEnded) {
+      return;
+    }
     const { isDragging, game } = this.state
     const gameState = game.state()
     if (gameState.remainingTicks === 0){
