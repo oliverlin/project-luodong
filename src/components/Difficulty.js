@@ -2,12 +2,12 @@ import React from 'react'
 import times from 'lodash/times'
 import styled from 'styled-components'
 
-const Difficulty = ({ value }) => {
+const Difficulty = ({ value, color }) => {
   // let difficultyStars = ''
   const difficultyStars = times(value, () => '♣︎')
 
   return (
-    <StyledDifficulty>
+    <StyledDifficulty color={color}>
       {difficultyStars}
     </StyledDifficulty>
   )
@@ -16,6 +16,6 @@ const Difficulty = ({ value }) => {
 export default Difficulty
 
 const StyledDifficulty = styled.div`
-  color: #d76265;
+  color: ${props=>props.color};
   font-size: 12px;
 `

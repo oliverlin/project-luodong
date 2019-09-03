@@ -22,7 +22,12 @@ const Issue = ({
           </div>
         ) : (
             <div className='container'>
-              <div>{required ? 'True' : ''}</div>
+              {
+                required && (
+                  <div className='critical'>Critical!</div>
+                )
+              }
+
               <StyledTaskList>
                 {
                   tasks.map(task => {
@@ -69,9 +74,14 @@ const StyledIssue = styled.div.attrs(props => ({
   opacity: ${props => props.allFinished ? 0.4 : 1};
   .container{
     background: grey;
+    padding: 10px;
+  }
+  .critical{
+    color: #ff5555;
+    font-size: 13px;
+    font-weight: bold;
   }
 `
 const StyledTaskList = styled.div`
   display: flex;
-  padding: 10px;
 `

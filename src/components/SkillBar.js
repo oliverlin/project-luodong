@@ -1,19 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TICK_PER_MS } from '../constants'
+import { TICK_PER_MS, getColor } from '../constants'
 
 const tickFrequencyInSec = TICK_PER_MS / 1000 - 0.05
-
-const getColor = type => {
-  switch (type) {
-    case 'backend':
-      return '#4185f4'
-    case 'design':
-      return '#fbbe08'
-    case 'frontend':
-      return '#3aab58'
-  }
-}
 
 const SkillBar = ({
   type,
