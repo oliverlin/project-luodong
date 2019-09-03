@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/project-luodong/static/css/main.707b1a20.chunk.css",
-    "main.js": "/project-luodong/static/js/main.8c219ad2.chunk.js",
-    "main.js.map": "/project-luodong/static/js/main.8c219ad2.chunk.js.map",
+    "main.js": "/project-luodong/static/js/main.4038d82b.chunk.js",
+    "main.js.map": "/project-luodong/static/js/main.4038d82b.chunk.js.map",
     "runtime~main.js": "/project-luodong/static/js/runtime~main.06ec647e.js",
     "runtime~main.js.map": "/project-luodong/static/js/runtime~main.06ec647e.js.map",
     "static/js/2.893d3f03.chunk.js": "/project-luodong/static/js/2.893d3f03.chunk.js",
     "static/js/2.893d3f03.chunk.js.map": "/project-luodong/static/js/2.893d3f03.chunk.js.map",
     "index.html": "/project-luodong/index.html",
-    "precache-manifest.3e4edf199aa793b78259dca2b0c5b3cf.js": "/project-luodong/precache-manifest.3e4edf199aa793b78259dca2b0c5b3cf.js",
+    "precache-manifest.47a6f1e44915c58dc70bfd8df328881e.js": "/project-luodong/precache-manifest.47a6f1e44915c58dc70bfd8df328881e.js",
     "service-worker.js": "/project-luodong/service-worker.js",
     "static/css/main.707b1a20.chunk.css.map": "/project-luodong/static/css/main.707b1a20.chunk.css.map"
   }
