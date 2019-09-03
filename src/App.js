@@ -118,18 +118,14 @@ class App extends Component {
         onBeforeDragStart={this._onBeforeDragStart}
         onDragEnd={this._onDragEnd}>
         <StyledLayout>
-          <div className='production-line'>
-            <ProductionLine
-              currentTime={currentTime}
-              onRemove={this._removeDeveloper}
-              issues={issuesWithResources} />
-          </div>
-          <div className='resource-panel'>
-            <ResourcePanel
-              score={score}
-              resources={resources}
-              remainingTicks={remainingTicks} />
-          </div>
+          <ProductionLine
+            currentTime={currentTime}
+            onRemove={this._removeDeveloper}
+            issues={issuesWithResources} />
+          <ResourcePanel
+            score={score}
+            resources={resources}
+            remainingTicks={remainingTicks} />
         </StyledLayout>
         <ResultModal
           score={score}
@@ -191,11 +187,4 @@ const StyledLayout = styled.div`
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  .production-line{
-    flex: 1;
-  }
-  .resource-panel{
-    flex: 0 0 160px;
-    background: rgba(255, 255, 255, 0.6);
-  }
 `

@@ -10,14 +10,14 @@ const Entry = () => {
     ) : (
       <StyledCover>
         <div className='info'>
-        <div className='description'>
-          Assign your resources properly to complete issue and tasks as many as possible!
-        </div>
-        <div
-          className='btn'
-          onClick={() => setStarted(true)}>
-          Start Game!!
-        </div>
+          <div className='description'>
+            Assign your resources properly to complete issue and tasks as many as possible!
+          </div>
+          <div
+            className='btn'
+            onClick={() => setStarted(true)}>
+            Start Game!!
+          </div>
         </div>
       </StyledCover>
 
@@ -37,6 +37,9 @@ const StyledCover = styled.div`
     text-align: center;
     font-size: 22px;
     color: #f4427d;
+  }
+  .description{
+    padding: 0 20px;
   }
   .btn{
     display: inline-block;

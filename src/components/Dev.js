@@ -72,7 +72,7 @@ const Dev = ({
 }
 const StyledResource = styled.div`
   display: flex;
-  width: 120px;
+  width: 110px;
   height: 48px;
   background: #fff;
   border-radius: 4px;
@@ -161,6 +161,13 @@ const StyledResource = styled.div`
   &:hover{
     .cancel{
       display: block;
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    display: inline-flex;
+    margin: 0 10px 0 0;
+    &:last-child{
+      margin: 0;
     }
   }
 `

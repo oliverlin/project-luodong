@@ -31,11 +31,11 @@ class CurrentScore extends Component {
       <StyledContainer>
         <div className='score'>
           Revenue:
-          <CountUp end={value} />
+          $<CountUp end={value} />
         </div>
         {
           <StyledDecreasedScores show={decreasedScore > 0}>
-            -<CountUp duration={0.5} end={decreasedScore} />
+            -$<CountUp duration={0.5} end={decreasedScore} />
           </StyledDecreasedScores>
         }
       </StyledContainer>
@@ -56,6 +56,11 @@ const StyledContainer = styled.div`
     white-space: nowrap;
     color: #4185f4;
     font-weight: bold;
+  }
+  @media only screen and (max-width: 480px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 `
 const StyledDecreasedScores = styled.div`

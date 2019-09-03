@@ -19,9 +19,9 @@ const Task = ({
   }
 
   if (progress === 1){
-    return <StyledTask>
+    return <StyledFinished>
       Finished
-    </StyledTask>
+    </StyledFinished>
   }
   return (
     <StyledTask>
@@ -44,7 +44,6 @@ const Task = ({
               avatar={dev.avatar}
               design={dev.design}
               frontend={dev.frontend}
-              // used={dev.used}
               onClick={_onRemove(dev.id)}
               actionText='Cancel'
             />
@@ -89,16 +88,28 @@ const StyledDropZone = styled.div`
   }
 `
 
-const StyledTask = styled.div`
-  background: #fff;
+const StyledBase = styled.div`
   margin-right: 10px;
   overflow: hidden;
-  width: 120px;
+  width: 110px;
   height: 56px;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
+`
+
+const StyledFinished = styled(StyledBase)`
+  background: rgba(255, 255, 255, 0.5);
+  line-height: 56px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+`
+
+const StyledTask = styled(StyledBase)`
+  background: #fff;
   &:last-child{
     margin: 0;
   }
