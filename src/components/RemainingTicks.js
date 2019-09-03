@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const RemainingTicks = ({ ticks }) => {
-  const remainingWeeks = Math.floor(ticks / 4)
+  const remainingWeeks = Math.floor(ticks / 4) + 1
   return (
     <StyledContainer>
       {
@@ -22,7 +22,7 @@ const RemainingTicks = ({ ticks }) => {
 export default RemainingTicks
 
 const StyledContainer = styled.div`
-  margin: -10px -10px 10px -10px;
+  margin: 0;
   font-size: 12px;
   background: #fff;
   padding: 10px 10px 0 10px;

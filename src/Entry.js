@@ -28,26 +28,26 @@ export default Entry
 
 const StyledCover = styled.div`
   height: 100vh;
-  background: #fff;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   .info{
     font-family: 'Permanent Marker', cursive;
     text-align: center;
-    font-size: 18px;
-    color: #666;
+    font-size: 22px;
+    color: #f4427d;
   }
   .btn{
     display: inline-block;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 24px;
-    border: 2px solid #999;
-    color: #222;
+    padding: 15px 25px;
+    border-radius: 0;
+    font-size: 36px;
+    border: 2px solid #f983aa;
+    color: #f4427d;
     transition: 0.2s;
     cursor: pointer;
-    margin: 20px 0;
+    margin: 36px 0;
     &:hover{
       transform: scale(1.1);
       box-shadow: 0 12px 15px rgba(0,0,0,0.2)

@@ -4,6 +4,7 @@ import CurrentScore from '../components/CurrentScore'
 import RemainingTicks from '../components/RemainingTicks'
 import { Droppable } from 'react-beautiful-dnd'
 import { DROPPABLE_RESOURCE_PANEL } from '../constants'
+import styled from 'styled-components'
 
 const ResourcePanel = ({ resources, score, remainingTicks }) => {
   return (
@@ -16,14 +17,14 @@ const ResourcePanel = ({ resources, score, remainingTicks }) => {
       <CurrentScore value={score}/>
       <Droppable droppableId={DROPPABLE_RESOURCE_PANEL}>
         {(droppableProvided, droppableSnapshot) => (
-          <div
-            ref={droppableProvided.innerRef}>
+          <StyledResources ref={droppableProvided.innerRef}>
             {
               resources.map((res, index) => {
                 return (
                   <ResourceItem
                     key={res.id}
                     draggableId={res.id}
+                    cooldownReason={res.cooldownReason}
                     index={index}
                     resourceName={res.name}
                     backend={res.backend}
@@ -36,7 +37,7 @@ const ResourcePanel = ({ resources, score, remainingTicks }) => {
                   })
                 }
             {droppableProvided.placeholder}
-          </div>
+          </StyledResources>
         )}
       </Droppable>
     </div>
@@ -44,3 +45,8 @@ const ResourcePanel = ({ resources, score, remainingTicks }) => {
 }
 
 export default ResourcePanel
+
+
+const StyledResources = styled.div`
+  padding: 20px;
+`
