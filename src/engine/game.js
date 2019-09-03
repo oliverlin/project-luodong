@@ -8,7 +8,7 @@ class Game {
     this.developerStore = new DeveloperStore(developers)
     this.currentTime = 0
     this.duration = duration
-    this.issueGenerator = new IssueGenerator(6)
+    this.issueGenerator = new IssueGenerator(4)
     this.issueStore = new IssueStore()
     this.syncIssue()
     this.scoreSeries = [this.computeScore(this.issueStore.list())]
@@ -72,11 +72,11 @@ class Game {
     const remainingTicks = this.duration - this.currentTime
     const scoreSeries = this.scoreSeries
     let star = 0
-    if (score >= 17000) {
+    if (score >= 15000) {
       star = 3
-    } else if (score >= 15000) {
-      star = 2
     } else if (score >= 10000) {
+      star = 2
+    } else if (score >= 5000) {
       star = 1
     }
 
@@ -156,7 +156,7 @@ class Game {
           if (delay === 1) {
             issue.state = 'delayed'
             if (issue.required) {
-              issue.penalty = Math.floor(issue.score * (1 - issueProgress))
+              issue.penalty = issue.score * 1.5
             }
           }
         }
@@ -197,7 +197,7 @@ class Game {
   }
 
   randomRelease() {
-    const p = 0.01
+    const p = 0.08
     const removeDeveloper = this.removeDeveloper.bind(this)
     const reasonMap = {
       sick: 5,

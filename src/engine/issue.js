@@ -5,7 +5,7 @@ function newIssue(startedAt) {
   const id = uuidv1()
   const duration = 40 + Math.floor(Math.random() * 40)
   const expiredAt = startedAt + duration
-  const required = Math.random() > 0.8
+  const required = Math.random() > 0.4
   const taskCount = 1 + Math.floor(Math.random() * 3)
   const penalty = 0
   const state = 'created'
