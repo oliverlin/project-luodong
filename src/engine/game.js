@@ -60,24 +60,22 @@ function updateIssues(gameState, currentTime) {
         issue.state = 'completed'
       } else {
         const delay = currentTime - issue.expiredAt
+        const issueProgress =
+          tasks.reduce((memo, task) => {
+            return memo + task.progress
+          }, 0) / tasks.length
         if (issue.required) {
-          console.log(currentTime)
-          if (delay === 5) {
-            issue.penalty = Math.floor(issue.score * 0.5)
-          } else if (delay === 10) {
-            issue.penalty = issue.score
+          if (delay === 1) {
+            issue.penalty = Math.floor(issue.score * (1 - issueProgress))
           }
         }
       }
     }
   })
 
-  const delayedIssues = Object.values(gameState.issueMap)
-    .filter(i => currentTime - i.expiredAt > 0)
-    .sort((a, b) => {
-      return b.no - a.no
-    })
-  const maximumDelayedIssueCount = 3
+  const delayedIssues = Object.values(gameState.issueMap).filter(
+    i => currentTime - i.expiredAt > 0
+  )
 
   const ongoingTaskMap = Object.keys(gameState.ongoingMap).reduce(
     (memo, devId) => {
@@ -88,7 +86,7 @@ function updateIssues(gameState, currentTime) {
     {}
   )
 
-  delayedIssues.slice(maximumDelayedIssueCount).forEach(issue => {
+  delayedIssues.forEach(issue => {
     issue.tasks.forEach(task => {
       if (ongoingTaskMap[task.id]) {
         const devId = ongoingTaskMap[task.id].devId
