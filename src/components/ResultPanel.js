@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import times from 'lodash/times'
 
 
 function drawLinechart(targetDiv, scoreSeries) {
@@ -30,18 +31,23 @@ function drawLinechart(targetDiv, scoreSeries) {
 
 class ResultPanel extends Component {
   componentDidMount() {
-    const {star, scoreSeries} = this.props
+    const {scoreSeries} = this.props
     drawLinechart(this.targetDiv, scoreSeries)
   }
 
   render() {
-    const {star, scoreSeries} = this.props
     return (
       <div>
-        asdfasdfasd
+        {this._renderStars()}
         <div ref={(ref) => this.targetDiv=ref}></div>
       </div>
     )
+  }
+
+  _renderStars = () => {
+    const {star} = this.props
+    const solidStars = times(star, () => '★')
+    return solidStars.join('').padEnd(3, '☆')
   }
 }
 
