@@ -30,6 +30,7 @@ const ResourcePanel = ({ resources, score, remainingTicks }) => {
                     backend={res.backend}
                     cooldown={res.cooldown}
                     design={res.design}
+                    avatar={res.avatar}
                     frontend={res.frontend}
                     used={res.used}
                     />

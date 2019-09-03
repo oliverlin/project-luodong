@@ -197,7 +197,7 @@ class Game {
   }
 
   randomRelease() {
-    const p = 0.1
+    const p = 0.01
     const removeDeveloper = this.removeDeveloper.bind(this)
     const reasonMap = {
       sick: 5,
