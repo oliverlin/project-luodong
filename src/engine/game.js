@@ -11,6 +11,7 @@ class Game {
     this.issueGenerator = new IssueGenerator(6)
     this.issueStore = new IssueStore()
     this.syncIssue()
+    this.scoreSeries = [this.computeScore(this.issueStore.list())]
   }
 
   assignDeveloper(devId, taskId) {
@@ -40,6 +41,7 @@ class Game {
     this.updateTasks()
     this.updateDevs()
     this.updateIssues()
+    this.scoreSeries.push(this.computeScore(this.issueStore.list()))
   }
 
   state() {
@@ -66,18 +68,19 @@ class Game {
 
     const score = this.computeScore(issues)
     const remainingTicks = this.duration - this.currentTime
+    const scoreSeries = this.scoreSeries
     return {
       currentTime: this.currentTime,
       developers,
       issues,
       score,
-      remainingTicks
+      remainingTicks,
+      scoreSeries
     }
   }
 
   syncIssue() {
     const issue = this.issueGenerator.generate(this.currentTime)
-    // console.log(issue)
     if (!!issue) {
       this.issueStore.add(issue)
     }
@@ -135,8 +138,9 @@ class Game {
             tasks.reduce((memo, task) => {
               return memo + task.progress
             }, 0) / tasks.length
-          if (issue.required) {
-            if (delay === 1) {
+          if (delay === 1) {
+            issue.state = 'delayed'
+            if (issue.required) {
               issue.penalty = Math.floor(issue.score * (1 - issueProgress))
             }
           }
