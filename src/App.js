@@ -31,7 +31,9 @@ class App extends Component {
     isDragging: false,
     score: 0,
     remainingTicks: null,
-    gameEnded: false
+    gameEnded: false,
+    star: null,
+    scoreSeries: []
   }
 
   componentDidMount(){
@@ -85,7 +87,9 @@ class App extends Component {
         issues: gameState.issues,
         resources: gameState.developers,
         score: gameState.score,
-        remainingTicks: gameState.remainingTicks
+        remainingTicks: gameState.remainingTicks,
+        star: gameState.star,
+        scoreSeries: gameState.scoreSeries
       })
     }
   }
@@ -107,7 +111,7 @@ class App extends Component {
   }
 
   render() {
-    const { resources, currentTime, score, remainingTicks, gameEnded } = this.state
+    const { resources, currentTime, score, remainingTicks, gameEnded, star, scoreSeries } = this.state
     const issuesWithResources = this._mapResourcesToIssues()
     return (
       <DragDropContext
@@ -127,7 +131,7 @@ class App extends Component {
               remainingTicks={remainingTicks} />
           </div>
         </StyledLayout>
-        <ResultModal show={gameEnded}/>
+        <ResultModal show={gameEnded} star={star} scoreSeries={scoreSeries}/>
       </DragDropContext>
     )
   }
