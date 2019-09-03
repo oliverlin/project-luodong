@@ -1,23 +1,28 @@
 import React from 'react'
+import useWindowDimensions from '../components/useWindowDimensions'
 import ResourceItem from '../components/ResourceItem'
 import CurrentScore from '../components/CurrentScore'
 import RemainingTicks from '../components/RemainingTicks'
 import { Droppable } from 'react-beautiful-dnd'
 import { DROPPABLE_RESOURCE_PANEL } from '../constants'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const ResourcePanel = ({ resources, score, remainingTicks }) => {
+  const { width } = useWindowDimensions()
+  const isMobile = width < 480
   return (
-    <div>
+    <StyledWrapper isMobile={isMobile}>
       {
         (remainingTicks > 0) && (
           <RemainingTicks ticks={remainingTicks} />
         )
       }
-      <CurrentScore value={score}/>
-      <Droppable droppableId={DROPPABLE_RESOURCE_PANEL}>
+      <CurrentScore value={score} />
+      <Droppable
+        isDropDisabled={isMobile}
+        droppableId={DROPPABLE_RESOURCE_PANEL}>
         {(droppableProvided, droppableSnapshot) => (
-          <StyledResources ref={droppableProvided.innerRef}>
+          <StyledResources isMobile={isMobile} ref={droppableProvided.innerRef}>
             {
               resources.map((res, index) => {
                 return (
@@ -33,21 +38,48 @@ const ResourcePanel = ({ resources, score, remainingTicks }) => {
                     avatar={res.avatar}
                     frontend={res.frontend}
                     used={res.used}
-                    />
-                    )
-                  })
-                }
-            {droppableProvided.placeholder}
+                  />
+                )
+              })
+            }
+            {
+              !isMobile && (droppableProvided.placeholder)
+            }
           </StyledResources>
         )}
       </Droppable>
-    </div>
+    </StyledWrapper>
   )
 }
 
 export default ResourcePanel
 
 
+const StyledWrapper = styled.div`
+  flex: 0 0 160px;
+  background: rgba(255, 255, 255, 0.6);
+  ${
+    props => props.isMobile ? css`
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      overflow-x: auto;
+      flex: auto;
+    ` : css`;
+      flex: 0 0 160px;
+    `
+  }
+`
 const StyledResources = styled.div`
   padding: 20px;
+  ${
+    props => props.isMobile && css`
+      padding: 10px;
+      /* display: flex; */
+      overflow-y: hidden;
+      overflow-x: auto;
+      white-space: nowrap;
+    `
+  }
 `

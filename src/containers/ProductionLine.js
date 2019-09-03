@@ -10,7 +10,7 @@ const OFFSET_HEIGHT = 120
 const COLUMNS = 3
 
 const ProductionLine = ({ issues, currentTime, onRemove }) => {
-  const { height } = useWindowDimensions()
+  const { height, width } = useWindowDimensions()
 
   const _renderIssues = () => {
     return issues.map(issue => {
@@ -33,12 +33,14 @@ const ProductionLine = ({ issues, currentTime, onRemove }) => {
   }
 
   const issuesWithPosition = _renderIssues()
-  const groupIssuesByColumn = (issues) => {
-    return groupBy(issuesWithPosition, (issue) => Math.floor(issue.no % COLUMNS))
+  const groupIssuesByColumn = (issues, cols) => {
+    return groupBy(issuesWithPosition, (issue) => Math.floor(issue.no % cols))
   }
-  const groupedIssues = groupIssuesByColumn(issuesWithPosition)
-
-  const cols = times(COLUMNS, (index) => {
+  const cols = width < 480
+    ? 1
+    : COLUMNS
+  const groupedIssues = groupIssuesByColumn(issuesWithPosition, cols)
+  const lists = times(cols, (index) => {
     return (
       <div className='col'>
         <StyledList>
@@ -66,7 +68,7 @@ const ProductionLine = ({ issues, currentTime, onRemove }) => {
   return (
     <StyledListWrapper>
       <StyledCols>
-        {cols}
+        {lists}
       </StyledCols>
     </StyledListWrapper>
   )
@@ -83,6 +85,7 @@ const StyledCols = styled.div`
 `
 
 const StyledListWrapper = styled.div`
+  flex: 1;
   margin-top: -120px;
   height: calc(100% + ${OFFSET_HEIGHT}px);
 `
