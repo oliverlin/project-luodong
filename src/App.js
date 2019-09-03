@@ -75,9 +75,6 @@ class App extends Component {
   }
 
   _refreshData = () => {
-    if (this.gameEnded) {
-      return;
-    }
     const { isDragging, game } = this.state
     const gameState = game.state()
     if (gameState.remainingTicks === 0){
@@ -150,9 +147,12 @@ class App extends Component {
   }
 
   _onDragEnd = (result) => {
+    const { gameEnded } = this.state
     this._toggleDragging(false)()
     this._tick()
-    this._startTicker()
+    if (!gameEnded) {
+      this._startTicker()
+    }
     // dropped outside the list
     if (!result.destination) {
       return
