@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import times from 'lodash/times'
-
 
 function drawLinechart(targetDiv, scoreSeries) {
   window.google.charts.load('current', {packages: ['corechart', 'line']});
@@ -38,16 +36,9 @@ class ResultPanel extends Component {
   render() {
     return (
       <div>
-        {this._renderStars()}
         <div ref={(ref) => this.targetDiv=ref}></div>
       </div>
     )
-  }
-
-  _renderStars = () => {
-    const {star} = this.props
-    const solidStars = times(star, () => '★')
-    return solidStars.join('').padEnd(3, '☆')
   }
 }
 

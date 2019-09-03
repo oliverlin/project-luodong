@@ -224,7 +224,7 @@ class Game {
   }
 }
 
-function newGame(duration = 120) {
+function newGame(duration = 5) {
   const devs = Developer.newDevelopers()
   const game = new Game(devs, duration)
   return {

@@ -131,7 +131,11 @@ class App extends Component {
               remainingTicks={remainingTicks} />
           </div>
         </StyledLayout>
-        <ResultModal show={gameEnded} star={star} scoreSeries={scoreSeries}/>
+        <ResultModal
+          score={score}
+          show={gameEnded}
+          star={star}
+          scoreSeries={scoreSeries}/>
       </DragDropContext>
     )
   }
