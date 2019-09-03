@@ -1,20 +1,20 @@
 import React from 'react'
-import styled from 'styled-components'
-import Task from './Task'
-import { TICK_PER_MS } from '../constants'
-import Shaker from './Shaker'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-// const tickFrequencyInSec = TICK_PER_MS / 1000 - 0.05
+
+
+const _restart = () => {
+  window.location.reload()
+}
 
 const ResultModal = ({
-
+  show
 }) => {
   return (
     <div>
       asdfasdfasd
     <Modal
-      show={false}
+      show={show}
       onHide={()=>{}}>
       <Modal.Header>
         <Modal.Title>Result</Modal.Title>
@@ -23,7 +23,7 @@ const ResultModal = ({
         Result
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={()=>{}}>
+          <Button variant='primary' onClick={_restart}>
           Restart
         </Button>
       </Modal.Footer>
