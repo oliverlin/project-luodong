@@ -6,8 +6,7 @@ import times from 'lodash/times'
 import styled from 'styled-components'
 
 // const PRODUCTION_ZONE_PERCENTAGE = 0.7
-const OFFSET_HEIGHT = 80
-const ITEM_HEIGHT = 50
+const OFFSET_HEIGHT = 120
 const COLUMNS = 3
 
 const ProductionLine = ({ issues, currentTime, onRemove }) => {
@@ -44,7 +43,6 @@ const ProductionLine = ({ issues, currentTime, onRemove }) => {
       <div className='col'>
         <StyledList>
           {
-            // rows
             (groupedIssues[index] || [])
               .filter(issue => issue.expiredAt > currentTime)
               .map(issue => {
@@ -85,14 +83,12 @@ const StyledCols = styled.div`
 `
 
 const StyledListWrapper = styled.div`
-  margin-top: ${1 - OFFSET_HEIGHT};
-  background: #fff;
-  height: 100%;
+  margin-top: -120px;
+  height: calc(100% + ${OFFSET_HEIGHT}px);
 `
 
 const StyledList = styled.div`
-  height: 100%;
+  height: calc(100% + ${OFFSET_HEIGHT}px);
   display: flex;
-  background: green;
   flex-direction: column;
 `

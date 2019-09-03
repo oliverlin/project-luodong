@@ -29,23 +29,34 @@ class CurrentScore extends Component {
     const { value } = this.props
     const { decreasedScore } = this.state
     return (
-      <StyledScores>
-        <div>Score: <CountUp end={value} /></div>
+      <StyledContainer>
+        <div className='score'>Score: <CountUp end={value} /></div>
         {
           <StyledDecreasedScores show={decreasedScore > 0}>
             -<CountUp duration={0.5} end={decreasedScore} />
           </StyledDecreasedScores>
         }
-      </StyledScores>
+      </StyledContainer>
     )
   }
 }
 
 export default CurrentScore
 
-const StyledScores = styled.div`
+const StyledContainer = styled.div`
+  background: #fff;
+  margin: -10px -10px 10px -10px;
+  padding: 10px;
+  .score{
+    font-size: 14px;
+    white-space: nowrap;
+    color: #4185f4;
+    font-weight: bold;
+  }
 `
 const StyledDecreasedScores = styled.div`
+  text-align: right;
   color: #f45b5d;
+  font-size: 13px;
   opacity: ${props => props.show ? 1 : 0};
 `

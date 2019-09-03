@@ -78,14 +78,16 @@ const StyledIssue = styled.div.attrs(props => ({
   justify-content: center;
   opacity: ${props => props.allFinished ? 0.4 : 1};
   .container{
-    background: grey;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(100, 100, 100, 0.4);
+    border-radius: 8px;
     padding: 10px;
   }
   .critical{
     color: #ff5555;
     font-size: 13px;
     font-weight: bold;
-    margin-bottom:
+    margin-bottom: 5px;
   }
 `
 const StyledTaskList = styled.div`
