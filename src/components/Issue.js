@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Task from './Task'
 import { TICK_PER_MS } from '../constants'
+import Shaker from './Shaker'
 
 const tickFrequencyInSec = TICK_PER_MS / 1000 - 0.05
 
@@ -10,9 +11,11 @@ const Issue = ({
   position,
   required,
   onRemove,
+  percentage,
   resuired
 }) => {
   const allFinished = !tasks.some(task => task.progress !== 1)
+  const strengthPercentage = percentage
   return (
     <StyledIssue allFinished={allFinished} position={position}>
       {
@@ -21,33 +24,35 @@ const Issue = ({
             Issue completed!
           </div>
         ) : (
-            <div className='container'>
-              {
-                required && (
-                  <div className='critical'>Critical!</div>
-                )
-              }
-
-              <StyledTaskList>
+            <Shaker strengthPercentage={strengthPercentage}>
+              <div className='container'>
                 {
-                  tasks.map(task => {
-                    return (
-                      <Task
-                        key={task.id}
-                        id={task.id}
-                        onRemove={onRemove}
-                        difficulty={task.difficulty}
-                        devId={task.devId}
-                        dev={task.dev}
-                        progress={task.progress}
-                        complexity={task.complexity}
-                        taskType={task.taskType}
-                        state={task.state} />
-                    )
-                  })
+                  required && (
+                    <div className='critical'>Critical!</div>
+                  )
                 }
-              </StyledTaskList>
-            </div>
+
+                <StyledTaskList>
+                  {
+                    tasks.map(task => {
+                      return (
+                        <Task
+                          key={task.id}
+                          id={task.id}
+                          onRemove={onRemove}
+                          difficulty={task.difficulty}
+                          devId={task.devId}
+                          dev={task.dev}
+                          progress={task.progress}
+                          complexity={task.complexity}
+                          taskType={task.taskType}
+                          state={task.state} />
+                      )
+                    })
+                  }
+                </StyledTaskList>
+              </div>
+            </Shaker>
           )
       }
     </StyledIssue>
@@ -80,6 +85,7 @@ const StyledIssue = styled.div.attrs(props => ({
     color: #ff5555;
     font-size: 13px;
     font-weight: bold;
+    margin-bottom:
   }
 `
 const StyledTaskList = styled.div`
