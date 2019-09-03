@@ -18,6 +18,9 @@ const Entry = () => {
             onClick={() => setStarted(true)}>
             Start Game!!
           </div>
+          <div className='license'>
+            Only for non-commercial research and private study purpose
+          </div>
         </div>
       </StyledCover>
 
@@ -56,5 +59,10 @@ const StyledCover = styled.div`
       box-shadow: 0 12px 15px rgba(0,0,0,0.2)
       color: #999;
     }
+  }
+  .license{
+    font-size: 12px;
+    color: #fff;
+    opacity: 0.6
   }
 `
