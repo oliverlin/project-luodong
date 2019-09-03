@@ -1,12 +1,18 @@
 import React from 'react'
 import ResourceItem from '../components/ResourceItem'
 import CurrentScore from '../components/CurrentScore'
+import RemainingTicks from '../components/RemainingTicks'
 import { Droppable } from 'react-beautiful-dnd'
 import { DROPPABLE_RESOURCE_PANEL } from '../constants'
 
-const ResourcePanel = ({ resources, score }) => {
+const ResourcePanel = ({ resources, score, remainingTicks }) => {
   return (
     <div>
+      {
+        (remainingTicks > 0) && (
+          <RemainingTicks ticks={remainingTicks} />
+        )
+      }
       <CurrentScore value={score}/>
       <Droppable droppableId={DROPPABLE_RESOURCE_PANEL}>
         {(droppableProvided, droppableSnapshot) => (

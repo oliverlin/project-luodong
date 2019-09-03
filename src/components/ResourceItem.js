@@ -30,7 +30,7 @@ const ResourceItem = ({
           <SkillBar compact type='frontend' value={frontend / 120} />
           {
             cooldown > 0 && (
-              <div className='cd'>CD: {cooldown}</div>
+              <div className='cd'>CD {cooldown}</div>
             )
           }
           <div className='info'>
@@ -55,7 +55,7 @@ const StyledResource = styled.div`
   background: #fff;
   border-radius: 4px;
   margin-bottom: 10px;
-  padding: 6px;
+  padding: 10px 6px;
   opacity: ${props => (props.isDragging || props.isUsed) ? 0.6 : 1};
   position: relative;
   box-shadow: 0 1px 6px rgba(80,80,80,0.1);
@@ -68,15 +68,27 @@ const StyledResource = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(20, 20, 20, 0.2)
+    background: rgba(20, 20, 20, 0.2);
+    z-index: 2;
+    background: #f97376c7;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 48px;
+    color: #fff;
+    text-align: left;
+    padding-left: 10px;
   }
   .info{
+    position: relative;
     display: flex;
     font-size: 14px;
     align-items: center;
+    z-index: 1;
     .name{
       margin-right: 6px;
-      font-size: 13px;
+      font-size: 12px;
+      font-weight: bold;
     }
     .busy{
       color: #999;

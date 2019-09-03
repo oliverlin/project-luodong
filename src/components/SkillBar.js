@@ -35,7 +35,7 @@ const StyledBar = styled.div`
     left: 0;
     width: ${props => 100 * props.value}%;
     background: ${props => props.color};
-    height: ${props => props.compact ? '4px' : '8px'};;
+    height: ${props => props.compact ? '4px' : '8px'};
     z-index: 2;
     transition: ${tickFrequencyInSec}s width;
   }

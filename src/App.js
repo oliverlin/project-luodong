@@ -29,10 +29,12 @@ class App extends Component {
     intervalId: null,
     game: null,
     isDragging: false,
-    score: 0
+    score: 0,
+    remainingTicks: null
   }
 
   componentDidMount(){
+    require('./matrixAnimation')
     const game = this._setUpGame()
     this.setState({ game }, this._startTicker)
     this.audio = new Audio("https://dl.dropbox.com/s/ba0ffaw22wd2mpp/background_cat_short.mp3")
@@ -73,6 +75,7 @@ class App extends Component {
         issues: gameState.issues,
         resources: gameState.developers,
         score: gameState.score,
+        remainingTicks: gameState.remainingTicks
       })
     }
   }
@@ -94,7 +97,7 @@ class App extends Component {
   }
 
   render() {
-    const { resources, currentTime, score } = this.state
+    const { resources, currentTime, score, remainingTicks } = this.state
     const issuesWithResources = this._mapResourcesToIssues()
     return (
       <DragDropContext
@@ -110,7 +113,8 @@ class App extends Component {
           <div className='resource-panel'>
             <ResourcePanel
               score={score}
-              resources={resources} />
+              resources={resources}
+              remainingTicks={remainingTicks} />
           </div>
         </StyledLayout>
       </DragDropContext>
