@@ -5,13 +5,14 @@ import times from 'lodash/times'
 function drawLinechart(targetDiv, scoreSeries) {
   window.google.charts.load('current', {packages: ['corechart', 'line']});
   window.google.charts.setOnLoadCallback(drawBasic);
-  console.log(scoreSeries)
+
   function drawBasic() {
         var data = new window.google.visualization.DataTable();
-        data.addColumn('number', 'X');
-        data.addColumn('number', 'player');
+        data.addColumn('number', 'tick');
+        data.addColumn('number', 'revenue');
+        data.addColumn({type: 'string', role: 'tooltip'})
 
-        var drawScoreSeries = scoreSeries.map((score, idx) => [idx, score])
+        var drawScoreSeries = scoreSeries.map((score, idx) => [idx, score, score.toString(10)])
         data.addRows(drawScoreSeries)
 
         var options = {
