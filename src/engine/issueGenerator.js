@@ -21,4 +21,4 @@ class IssueGenerator {
   }
 }
 
-module.exports = IssueGenerator
+export default IssueGenerator
